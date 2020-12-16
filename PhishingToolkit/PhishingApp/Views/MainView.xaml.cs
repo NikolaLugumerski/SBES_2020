@@ -26,7 +26,7 @@ namespace PhishingApp.Views
 			InitializeComponent();
 			this.DataContext = new PhishingApp.ViewModel.MainViewModel();
 		}
-	}
+    }
 }
 
 
