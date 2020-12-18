@@ -35,25 +35,27 @@ namespace PhishingApp.Commands
 
         public void Execute(object parameter)
         {
-            string[] email;
-            email = EmailModel.Emails.Split('\n');
-            Array.Resize(ref email, email.Length - 1);
+            string[] emailArray;
+            emailArray = EmailModel.Emails.Split('\n');
+            Array.Resize(ref emailArray, emailArray.Length - 1);
 
-            //because gmail has protection against unknown clients signing in you must use https://www.google.com/settings/security/lesssecureapps on your account
-            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
-            client.Port = 587;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            client.Timeout = 10000;
-            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("testzafishingaplikaciju@gmail.com", "sifratest123");
-            System.Net.Mail.MailMessage mm = new System.Net.Mail.MailMessage("testzafishingaplikaciju@gmail.com", "nlugija@gmail.com", "subject", "hello");
-            mm.BodyEncoding = UTF8Encoding.UTF8;
-            mm.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnFailure;
-            client.Send(mm);
+            foreach (string email in emailArray)
+            {
+                //because gmail has protection against unknown clients signing in you must use https://www.google.com/settings/security/lesssecureapps on your account
+                SmtpClient client = new SmtpClient();
+                client.Port = 587;
+                client.Host = "smtp.eu.sparkpostmail.com";
+                client.Timeout = 10000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new System.Net.NetworkCredential("testzafishingaplikaciju@gmail.com", "sifratest123");
+                client.EnableSsl = true;
+
+                MailMessage mm = new MailMessage("testzafishingaplikaciju@gmail.com", email, "subject", EmailModel.Body);
+                mm.BodyEncoding = UTF8Encoding.UTF8;
+                mm.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnFailure;
+                client.Send(mm);
+            }
         }
-
-
     }
 }

@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:PhishingApp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1400">
-	<Grid>
-		<Label Content="Import from txt file:" FontSize="16" HorizontalAlignment="Left" Margin="1121,54,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065"/>
-		<Button Content="Browse" HorizontalAlignment="Left" Margin="1273,54,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= EmailReadCommand}"/>
-		<TextBox Name="txtEmails" HorizontalAlignment="Left" Height="671" Margin="1121,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Emails, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="245" FontSize="15" />
-		<Button Content="Send" HorizontalAlignment="Left" Margin="1273,804,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= SendEmailCommand}"/>
-		<Button Content="Import email" HorizontalAlignment="Left" Margin="54,54,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= ImportEmailCommand}"/>
-	</Grid>
+    <Grid>
+        <Label Content="Import from txt file:" FontSize="16" HorizontalAlignment="Left" Margin="1094,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065"/>
+        <Button Content="Browse" HorizontalAlignment="Left" Margin="1246,54,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= EmailReadCommand}"/>
+        <TextBox Name="txtEmails" HorizontalAlignment="Left" Height="671" Margin="1094,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Emails, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="245" FontSize="15" />
+        <Button Content="Send" HorizontalAlignment="Left" Margin="1246,810,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= SendEmailCommand}"/>
+        <Button Content="Import email" HorizontalAlignment="Left" Margin="54,54,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= ImportEmailCommand}"/>
+        <TextBox Name="txtBodyEmails" HorizontalAlignment="Left" Height="671" Margin="54,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="468"/>
+    </Grid>
 </UserControl>
