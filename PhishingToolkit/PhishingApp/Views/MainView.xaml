@@ -11,7 +11,8 @@
         <Button Content="Browse" HorizontalAlignment="Left" Margin="1246,54,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= EmailReadCommand}"/>
         <TextBox Name="txtEmails" HorizontalAlignment="Left" Height="671" Margin="1094,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Emails, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="245" FontSize="15" />
         <Button Content="Send" HorizontalAlignment="Left" Margin="1246,810,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= SendEmailCommand}"/>
-        <Button Content="Import email" HorizontalAlignment="Left" Margin="54,54,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= ImportEmailCommand}"/>
+        <Button Content="Import email" HorizontalAlignment="Left" Margin="54,54,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= ParseEmailCommand}"/>
         <TextBox Name="txtBodyEmails" HorizontalAlignment="Left" Height="671" Margin="54,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="468"/>
+        <Button Content="Perview" HorizontalAlignment="Left" Margin="562,108,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding PerviewEmailCommand}"/>
     </Grid>
 </UserControl>
