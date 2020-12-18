@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\EmailReadCommand.cs" />
+    <Compile Include="Commands\ImportEmailCommand.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Model\EmailModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

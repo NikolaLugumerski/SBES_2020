@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -47,7 +48,7 @@ namespace PhishingApp.Commands
             client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Credentials = new System.Net.NetworkCredential("testzafishingaplikaciju@gmail.com", "sifratest123");
-            System.Net.Mail.MailMessage mm = new System.Net.Mail.MailMessage("testzafishingaplikaciju@gmail.com", "testzafishingaplikaciju@gmail.com", "subject", "hello");
+            System.Net.Mail.MailMessage mm = new System.Net.Mail.MailMessage("testzafishingaplikaciju@gmail.com", "nlugija@gmail.com", "subject", "hello");
             mm.BodyEncoding = UTF8Encoding.UTF8;
             mm.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnFailure;
             client.Send(mm);

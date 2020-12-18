@@ -20,6 +20,28 @@ namespace PhishingApp.Model
             }
         }
 
+        private string body;
+
+        public string Body
+        {
+            get { return body; }
+            set { 
+                body = value;
+                OnPropertyChanged("Body");
+            }
+        }
+
+
+        private int myVar;
+
+        public int MyProperty
+        {
+            get { return myVar; }
+            set { myVar = value; }
+        }
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
