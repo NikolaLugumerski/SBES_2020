@@ -21,12 +21,16 @@ namespace PhishingApp.ViewModel
 			set { emailModel = value; }
 		}
 
-		public static EmailReadCommand EmailReadCommand { get; set; }
-		public MainViewModel()
+		public static EmailReadCommand EmailReadCommand { get; set;}
+        public static SendEmailCommand SendEmailCommand { get; set; }
+        public MainViewModel()
 		{
 			EmailModel = new EmailModel();
 			EmailReadCommand = new EmailReadCommand(EmailModel);
+			SendEmailCommand = new SendEmailCommand(EmailModel);
 		}
+
+
 	}
 }
 
