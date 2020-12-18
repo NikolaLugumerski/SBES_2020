@@ -43,15 +43,15 @@ namespace PhishingApp.Commands
             {
                 //because gmail has protection against unknown clients signing in you must use https://www.google.com/settings/security/lesssecureapps on your account
                 SmtpClient client = new SmtpClient();
-                client.Port = 587;
-                client.Host = "smtp.eu.sparkpostmail.com";
+                client.Port = 2525;
+                client.Host = "smtp.mailtrap.io";
                 client.Timeout = 10000;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
-                client.Credentials = new System.Net.NetworkCredential("testzafishingaplikaciju@gmail.com", "sifratest123");
+                client.Credentials = new NetworkCredential("25accfc8259338", "4d71884d65d591");
                 client.EnableSsl = true;
-
-                MailMessage mm = new MailMessage("testzafishingaplikaciju@gmail.com", email, "subject", EmailModel.Body);
+                
+                MailMessage mm = new MailMessage("from@example.com", "testzafishingaplikaciju@gmail.com", "subject", EmailModel.Body);
                 mm.BodyEncoding = UTF8Encoding.UTF8;
                 mm.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnFailure;
                 client.Send(mm);
