@@ -1,5 +1,4 @@
 ﻿using MimeKit;
-using MailKit;
 using PhishingApp.Model;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using MailKit.Net.Smtp;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace PhishingApp.Commands
 {
@@ -42,9 +42,14 @@ namespace PhishingApp.Commands
             emailArray = EmailModel.Emails.Split('\n');
             Array.Resize(ref emailArray, emailArray.Length - 1);
 
+            string smtpHost = ConfigurationManager.AppSettings.Get("smtpHost");
+            int smtpPort = Int32.Parse(ConfigurationManager.AppSettings.Get("smtpPort"));
+            bool smtpUseSSL = Boolean.Parse(ConfigurationManager.AppSettings.Get("smtpUseSSL"));
+            string smtpUser = ConfigurationManager.AppSettings.Get("smtpUser");
+            string smtpPass = ConfigurationManager.AppSettings.Get("smtpPass");
+
             foreach (string email in emailArray)
             {
-               
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress("Petar test", "petartestovic@gmail.com"));
                 message.To.Add(new MailboxAddress("Customer", email));
@@ -60,11 +65,9 @@ namespace PhishingApp.Commands
                     // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
                     client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    client.Connect("smtp.gmail.com", 465, true); // mozda 465
-
+                    client.Connect(smtpHost, smtpPort, smtpUseSSL); // mozda 465
                     // Note: only needed if the SMTP server requires authentication
-                    client.Authenticate("petartestovic@gmail.com", "petartestovic123");
-
+                    client.Authenticate(smtpUser, smtpPass);
                     client.Send(message);
                     client.Disconnect(true);
                 }
