@@ -12,9 +12,19 @@ namespace PhishingApp.Commands
 {
 	public class ParseEmailCommand : ICommand
 	{
-		private EmailModel emailModel;
+		public event EventHandler CanExecuteChanged
+		{
+			add { CommandManager.RequerySuggested += value; }
+			remove { CommandManager.RequerySuggested -= value; }
+		}
 
-		public event EventHandler CanExecuteChanged;
+		protected void RaiseCanExecuteChanged()
+		{
+			CommandManager.InvalidateRequerySuggested();
+		}
+
+
+		private EmailModel emailModel;
 
 		public EmailModel EmailModel
 		{

@@ -34,7 +34,6 @@ namespace PhishingApp.ViewModel
 			EmailReadCommand = new EmailReadCommand(EmailModel);
 			SendEmailCommand = new SendEmailCommand(EmailModel);
 			PerviewEmailCommand = new PerviewEmailCommand(EmailModel);
-
 		}
 
 

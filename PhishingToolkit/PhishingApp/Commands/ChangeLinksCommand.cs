@@ -15,9 +15,18 @@ namespace PhishingApp.Commands
 {
 	public	class ChangeLinksCommand : ICommand
 	{
-		private EmailModel emailModel;
+		public event EventHandler CanExecuteChanged
+		{
+			add { CommandManager.RequerySuggested += value; }
+			remove { CommandManager.RequerySuggested -= value; }
+		}
 
-		public event EventHandler CanExecuteChanged;
+		protected void RaiseCanExecuteChanged()
+		{
+			CommandManager.InvalidateRequerySuggested();
+		}
+
+		private EmailModel emailModel;
 
 		public EmailModel EmailModel
 		{
@@ -33,6 +42,9 @@ namespace PhishingApp.Commands
 
 		public bool CanExecute(object parameter)
 		{
+			if (EmailModel.MaliciousLink == null || EmailModel.Body == null)
+				return false;
+
 			return true;
 		}
 
@@ -46,11 +58,6 @@ namespace PhishingApp.Commands
             }
 			var changedHtml = htmlDoc.DocumentNode.WriteTo();
 			EmailModel.Body = changedHtml;
-		}
-
-		static string DBTranslate(string s)
-		{
-			return "junk_" + s;
 		}
 
 	}

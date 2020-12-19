@@ -18,7 +18,16 @@ namespace PhishingApp.Commands
     {
         private EmailModel emailModel;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        protected void RaiseCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
 
         public EmailModel EmailModel
         {
@@ -33,6 +42,13 @@ namespace PhishingApp.Commands
 
         public bool CanExecute(object parameter)
         {
+            if (EmailModel.Emails == null || EmailModel.SenderEmail == null || EmailModel.SenderName == null || 
+                EmailModel.SenderPassword == null || EmailModel.RecipientName == null || EmailModel.Body == null || 
+                EmailModel.EmailSubject == null)
+            {
+                return false;
+            }
+
             return true;
         }
 

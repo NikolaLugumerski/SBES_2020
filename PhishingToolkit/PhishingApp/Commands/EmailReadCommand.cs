@@ -11,11 +11,20 @@ namespace PhishingApp.Commands
 {
 	public class EmailReadCommand : ICommand
 	{
-	
+
+		public event EventHandler CanExecuteChanged
+		{
+			add { CommandManager.RequerySuggested += value; }
+			remove { CommandManager.RequerySuggested -= value; }
+		}
+
+		protected void RaiseCanExecuteChanged()
+		{
+			CommandManager.InvalidateRequerySuggested();
+		}
+
 
 		private EmailModel emailModel;
-
-		public event EventHandler CanExecuteChanged;
 
 		public EmailModel EmailModel
 		{

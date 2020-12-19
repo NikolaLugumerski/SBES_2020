@@ -13,7 +13,18 @@ namespace PhishingApp.Commands
 {
 	public class PerviewEmailCommand : ICommand
 	{
-		public event EventHandler CanExecuteChanged;
+	
+
+		public event EventHandler CanExecuteChanged
+		{
+			add { CommandManager.RequerySuggested += value; }
+			remove { CommandManager.RequerySuggested -= value; }
+		}
+
+		protected void RaiseCanExecuteChanged()
+		{
+			CommandManager.InvalidateRequerySuggested();
+		}
 
 		private EmailModel emailModel;
 
@@ -31,6 +42,9 @@ namespace PhishingApp.Commands
 
 		public bool CanExecute(object parameter)
 		{
+			if (EmailModel.Body == null)
+				return false;
+
 			return true;
 		}
 
