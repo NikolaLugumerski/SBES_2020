@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace PhishingApp.Commands
 {
-	public class PerviewEmailCommand : ICommand
+	public class PreviewEmailCommand : ICommand
 	{
 		public event EventHandler CanExecuteChanged;
 
@@ -23,7 +23,7 @@ namespace PhishingApp.Commands
 			set { emailModel = value; }
 		}
 
-		public PerviewEmailCommand(EmailModel emailModel)
+		public PreviewEmailCommand(EmailModel emailModel)
 		{
 			EmailModel = emailModel;
 		}
@@ -36,13 +36,13 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
-			using (StreamWriter sw = new StreamWriter("emailPerview.txt"))
+			using (StreamWriter sw = new StreamWriter("emailPreview.txt"))
 			{
 				sw.Write(EmailModel.Body);
 			}
 
-			PerviewWindow perviewWindow = new PerviewWindow();
-			perviewWindow.Show();
+			PreviewWindow previewWindow = new PreviewWindow();
+			previewWindow.Show();
 		}
 	}
 }

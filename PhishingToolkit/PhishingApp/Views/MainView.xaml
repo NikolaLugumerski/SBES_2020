@@ -6,29 +6,33 @@
              xmlns:local="clr-namespace:PhishingApp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1400">
-	<Grid>
-		<Label Content="Import from txt file:" FontSize="16" HorizontalAlignment="Left" Margin="1094,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065"/>
-		<Button Content="Browse" HorizontalAlignment="Left" Margin="1246,54,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= EmailReadCommand}"/>
-		<TextBox Name="txtEmails" HorizontalAlignment="Left" Height="671" Margin="1094,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Emails, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="245" FontSize="15" />
-		<Button Content="Send" HorizontalAlignment="Left" Margin="1246,810,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= SendEmailCommand}"/>
-		<Button Content="Import email" HorizontalAlignment="Left" Margin="25,64,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= ParseEmailCommand}"/>
-		<TextBox Name="txtBodyEmails" HorizontalAlignment="Left" Height="671" Margin="25,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="497"/>
-		<Button Content="Perview" HorizontalAlignment="Left" Margin="530,108,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding PerviewEmailCommand}"/>
-		<Label Content="Sender:" HorizontalAlignment="Left" Margin="550,224,0,0" VerticalAlignment="Top" Width="110"/>
-		<Label Content="Email:" HorizontalAlignment="Left" Margin="550,286,0,0" VerticalAlignment="Top" Width="110"/>
-		<Label Content="Password:" HorizontalAlignment="Left" Margin="550,322,0,0" VerticalAlignment="Top" Width="110"/>
-		<TextBox HorizontalAlignment="Left" Height="23" Margin="665,289,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.SenderEmail, Mode=OneWayToSource}"  VerticalAlignment="Top" Width="120" />
-		<TextBox HorizontalAlignment="Left" Height="23" Margin="665,325,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.SenderPassword, Mode=OneWayToSource}" VerticalAlignment="Top" Width="120"/>
-		<Label Content="Name of recipient:" HorizontalAlignment="Left" Margin="550,187,0,0" VerticalAlignment="Top" Width="110"/>
-		<TextBox HorizontalAlignment="Left" Height="23" Margin="665,190,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.RecipientName, Mode=OneWayToSource}"  VerticalAlignment="Top" Width="120"/>
-		<Label Content="Name:" HorizontalAlignment="Left" Margin="550,252,0,0" VerticalAlignment="Top" Width="110"/>
-		<TextBox HorizontalAlignment="Left" Height="23" Margin="665,255,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.SenderName, Mode=OneWayToSource}"  VerticalAlignment="Top" Width="120"/>
-		<Label Content="Subject:" HorizontalAlignment="Left" Margin="550,374,0,0" VerticalAlignment="Top" Width="61"/>
-		<TextBox HorizontalAlignment="Left" Height="90" Margin="616,374,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.EmailSubject, Mode=OneWayToSource}" VerticalAlignment="Top" Width="169" RenderTransformOrigin="0.358,1.261"/>
-		<Border BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Left" Height="138" Margin="545,224,0,0" VerticalAlignment="Top" Width="250"/>
-		<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="312" Margin="530,168,0,0" VerticalAlignment="Top" Width="282"/>
-		<TextBox HorizontalAlignment="Left" Height="30" Margin="255,65,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.MaliciousLink}" VerticalAlignment="Top" Width="184" RenderTransformOrigin="0.492,1.167"/>
-		<Label Content="Malicious link:" FontSize="14" HorizontalAlignment="Left" Margin="140,65,0,0" VerticalAlignment="Top" Width="96"/>
-		<Button Content="Change links" HorizontalAlignment="Left" Margin="444,64,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path=ChangeLinksCommand}"/>
-	</Grid>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="..\Images\emails_background.jpg" AlignmentY="Top" AlignmentX="Center"/>
+        </Grid.Background>
+
+        <Label Background="SlateGray" Content="Import from txt file:" FontSize="16" HorizontalAlignment="Left" Margin="1094,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065"/>
+        <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Browse" HorizontalAlignment="Left" Margin="1246,53,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= EmailReadCommand}"/>
+        <TextBox Name="txtEmails" HorizontalAlignment="Left" Height="671" Margin="1094,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Emails, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="245" FontSize="15" />
+        <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Send" HorizontalAlignment="Left" Margin="1246,810,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= SendEmailCommand}"/>
+        <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Import email" HorizontalAlignment="Left" Margin="25,64,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= ParseEmailCommand}"/>
+        <TextBox Name="txtBodyEmails" HorizontalAlignment="Left" Height="671" Margin="25,108,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="497"/>
+        <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Preview" HorizontalAlignment="Left" Margin="530,108,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding PreviewEmailCommand}"/>
+        <Border Background="SlateGray" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="312" Margin="530,168,0,0" VerticalAlignment="Top" Width="282"/>
+        <Border Background="Gray" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="138" Margin="545,224,0,0" VerticalAlignment="Top" Width="250"/>
+        <Label Content="Sender:" HorizontalAlignment="Left" Margin="550,224,0,0" VerticalAlignment="Top" Width="110"/>
+        <Label Content="Email:" HorizontalAlignment="Left" Margin="550,286,0,0" VerticalAlignment="Top" Width="110"/>
+        <Label Content="Password:" HorizontalAlignment="Left" Margin="550,322,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="665,289,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.SenderEmail, Mode=OneWayToSource}"  VerticalAlignment="Top" Width="120" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="665,325,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.SenderPassword, Mode=OneWayToSource}" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Name of recipient:" HorizontalAlignment="Left" Margin="550,187,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="665,190,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.RecipientName, Mode=OneWayToSource}"  VerticalAlignment="Top" Width="120"/>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="550,252,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="665,255,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.SenderName, Mode=OneWayToSource}"  VerticalAlignment="Top" Width="120"/>
+        <Label Content="Subject:" HorizontalAlignment="Left" Margin="550,374,0,0" VerticalAlignment="Top" Width="61"/>
+        <TextBox HorizontalAlignment="Left" Height="90" Margin="616,374,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.EmailSubject, Mode=OneWayToSource}" VerticalAlignment="Top" Width="169" RenderTransformOrigin="0.358,1.261"/>
+        <TextBox HorizontalAlignment="Left" Height="30" Margin="255,65,0,0" TextWrapping="Wrap" Text="{Binding Path=EmailModel.MaliciousLink}" VerticalAlignment="Top" Width="184" RenderTransformOrigin="0.492,1.167" />
+        <Label Background="LightSlateGray" Content="Malicious link:" FontSize="14" HorizontalAlignment="Left" Margin="154,66,0,0" VerticalAlignment="Top" Width="96"/>
+        <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Change links" HorizontalAlignment="Left" Margin="444,64,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path=ChangeLinksCommand}"/>
+    </Grid>
 </UserControl>

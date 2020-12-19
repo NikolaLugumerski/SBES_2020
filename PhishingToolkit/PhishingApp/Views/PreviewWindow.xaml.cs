@@ -17,15 +17,15 @@ using System.Windows.Shapes;
 namespace PhishingApp.Views
 {
 	/// <summary>
-	/// Interaction logic for PerviewWindow.xaml
+	/// Interaction logic for PreviewWindow.xaml
 	/// </summary>
-	public partial class PerviewWindow : Window
+	public partial class PreviewWindow : Window
 	{
-		public PerviewWindow()
+		public PreviewWindow()
 		{
 			InitializeComponent();
 
-			using (StreamReader sr = new StreamReader("emailPerview.txt"))
+			using (StreamReader sr = new StreamReader("emailPreview.txt"))
 			{
 				this.webBrowser.NavigateToString(sr.ReadToEnd());
 			}
