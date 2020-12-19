@@ -1,4 +1,6 @@
-﻿using PhishingApp.Model;
+﻿using MimeKit;
+using MailKit;
+using PhishingApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MailKit.Net.Smtp;
 
 namespace PhishingApp.Commands
 {
@@ -41,20 +44,31 @@ namespace PhishingApp.Commands
 
             foreach (string email in emailArray)
             {
-                //because gmail has protection against unknown clients signing in you must use https://www.google.com/settings/security/lesssecureapps on your account
-                SmtpClient client = new SmtpClient();
-                client.Port = 2525;
-                client.Host = "smtp.mailtrap.io";
-                client.Timeout = 10000;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential("25accfc8259338", "4d71884d65d591");
-                client.EnableSsl = true;
-                
-                MailMessage mm = new MailMessage("from@example.com", "testzafishingaplikaciju@gmail.com", "subject", EmailModel.Body);
-                mm.BodyEncoding = UTF8Encoding.UTF8;
-                mm.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnFailure;
-                client.Send(mm);
+               
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Petar test", "petartestovic@gmail.com"));
+                message.To.Add(new MailboxAddress("Customer", email));
+                message.Subject = "How you doin'? testu moj";
+
+                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                {
+                    Text = EmailModel.Body
+                };
+
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                    client.Connect("smtp.gmail.com", 465, true); // mozda 465
+
+                    // Note: only needed if the SMTP server requires authentication
+                    client.Authenticate("petartestovic@gmail.com", "petartestovic123");
+
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+
             }
         }
     }
