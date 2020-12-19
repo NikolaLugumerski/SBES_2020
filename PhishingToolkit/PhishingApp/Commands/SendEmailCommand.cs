@@ -51,9 +51,9 @@ namespace PhishingApp.Commands
             foreach (string email in emailArray)
             {
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Petar test", "petartestovic@gmail.com"));
-                message.To.Add(new MailboxAddress("Customer", email));
-                message.Subject = "How you doin'? testu moj";
+                message.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));
+                message.To.Add(new MailboxAddress(EmailModel.RecipientName, email));
+                message.Subject = EmailModel.EmailSubject;
 
                 message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                 {
@@ -67,7 +67,8 @@ namespace PhishingApp.Commands
 
                     client.Connect(smtpHost, smtpPort, smtpUseSSL); // mozda 465
                     // Note: only needed if the SMTP server requires authentication
-                    client.Authenticate(smtpUser, smtpPass);
+                    client.Authenticate(EmailModel.SenderEmail, EmailModel.SenderPassword);
+
                     client.Send(message);
                     client.Disconnect(true);
                 }
