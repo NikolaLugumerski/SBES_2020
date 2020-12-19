@@ -45,8 +45,6 @@ namespace PhishingApp.Commands
             string smtpHost = ConfigurationManager.AppSettings.Get("smtpHost");
             int smtpPort = Int32.Parse(ConfigurationManager.AppSettings.Get("smtpPort"));
             bool smtpUseSSL = Boolean.Parse(ConfigurationManager.AppSettings.Get("smtpUseSSL"));
-            string smtpUser = ConfigurationManager.AppSettings.Get("smtpUser");
-            string smtpPass = ConfigurationManager.AppSettings.Get("smtpPass");
 
             foreach (string email in emailArray)
             {
