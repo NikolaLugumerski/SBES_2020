@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Xml;
@@ -50,6 +51,11 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
+			if(!EmailModel.MaliciousLink.Contains("http://") && !EmailModel.MaliciousLink.Contains("https://"))
+            {
+				EmailModel.MaliciousLink = "http://" + EmailModel.MaliciousLink;
+            }
+
 			HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
 			htmlDoc.LoadHtml(EmailModel.Body);
 			foreach(var node in htmlDoc.DocumentNode.SelectNodes("//a"))
@@ -58,6 +64,8 @@ namespace PhishingApp.Commands
             }
 			var changedHtml = htmlDoc.DocumentNode.WriteTo();
 			EmailModel.Body = changedHtml;
+
+			MessageBox.Show("Changed links to: " + EmailModel.MaliciousLink);
 		}
 
 	}

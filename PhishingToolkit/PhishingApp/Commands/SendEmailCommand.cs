@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Configuration;
 using System.Collections.Specialized;
+using System.Windows;
 
 namespace PhishingApp.Commands
 {
@@ -51,7 +52,7 @@ namespace PhishingApp.Commands
 
             return true;
         }
-
+        
         public void Execute(object parameter)
         {
             string[] emailArray;
@@ -88,6 +89,8 @@ namespace PhishingApp.Commands
                 }
 
             }
+
+            MessageBox.Show("Messages sent.");
         }
     }
 }
