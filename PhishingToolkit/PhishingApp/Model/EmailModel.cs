@@ -32,14 +32,63 @@ namespace PhishingApp.Model
         }
 
 
-        private int myVar;
+       
 
-        public int MyProperty
+        private string senderName;
+
+        public string SenderName
         {
-            get { return myVar; }
-            set { myVar = value; }
+            get { return senderName; }
+            set { 
+                senderName = value;
+                OnPropertyChanged("SenderName");
+            }
         }
 
+        private string senderPassword;
+
+        public string SenderPassword
+        {
+            get { return senderPassword; }
+            set { 
+                senderPassword = value;
+                OnPropertyChanged("SenderPassword");
+            }
+        }
+
+
+        private string senderEmail;
+
+        public string SenderEmail
+        {
+            get { return senderEmail; }
+            set { 
+                senderEmail = value;
+                OnPropertyChanged("SenderEmail");
+            }
+        }
+
+        private string recipientName;
+
+        public string RecipientName
+        {
+            get { return recipientName; }
+            set { 
+                recipientName = value;
+                OnPropertyChanged("RecipientName");
+            }
+        }
+
+        private string emailSubject;
+
+        public string EmailSubject
+        {
+            get { return emailSubject; }
+            set {
+                emailSubject = value;
+                OnPropertyChanged("EmailSubject");
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
