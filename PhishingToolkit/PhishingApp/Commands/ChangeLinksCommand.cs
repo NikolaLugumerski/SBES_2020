@@ -38,29 +38,14 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
-			string html = EmailModel.Body;
-			/*
-			StringBuilder newHtml = new StringBuilder(html);
-			Regex r = new Regex(@"\<a href=\""([^\""]+)\"">"); // 1st capture for the replacement and 2nd for the find
-			foreach (var match in r.Matches(html).Cast<Match>().OrderByDescending(m => m.Index))
-			{
-				string text = EmailModel.MaliciousLink;
-				string newHref = DBTranslate(text);
-				newHtml.Remove(match.Groups[0].Index, match.Groups[0].Length);
-				newHtml.Insert(match.Groups[0].Index, newHref);
-			}
-			EmailModel.Body = newHtml.ToString();
-			*/
 			HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
 			htmlDoc.LoadHtml(EmailModel.Body);
-			var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//a");
-			for(int i=0; i<htmlNodes.Count; i++)
+			foreach(var node in htmlDoc.DocumentNode.SelectNodes("//a"))
             {
-				htmlNodes[i].Attributes["href"].Value = EmailModel.MaliciousLink;
-				
+				node.SetAttributeValue("href", EmailModel.MaliciousLink);
             }
-			//treba vratiti ove htmlNodes u htmlDoc
-			EmailModel.Body = htmlDoc.Text;
+			var changedHtml = htmlDoc.DocumentNode.WriteTo();
+			EmailModel.Body = changedHtml;
 		}
 
 		static string DBTranslate(string s)
