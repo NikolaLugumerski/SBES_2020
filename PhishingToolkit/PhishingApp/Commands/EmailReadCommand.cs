@@ -67,7 +67,7 @@ namespace PhishingApp.Commands
 
 		public void LoadEmails(string path)
 		{
-			string emails = string.Empty;
+			string emails = EmailModel.Emails;
 				
 			if (path.Equals("error"))
 			{
@@ -91,6 +91,8 @@ namespace PhishingApp.Commands
 				Console.WriteLine("The file could not be read:");
 				Console.WriteLine(e.Message);
 			}
+
+			//mozda bude morala provera da li su email-ovi svi unikatni HashSet lagano
 
 			EmailModel.Emails = emails;
 		}
