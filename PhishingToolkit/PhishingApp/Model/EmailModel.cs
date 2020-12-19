@@ -31,8 +31,18 @@ namespace PhishingApp.Model
             }
         }
 
+        private string maliciousLink;
 
-       
+        public string MaliciousLink
+        {
+            get { return maliciousLink; }
+            set { 
+                maliciousLink = value;
+                OnPropertyChanged("MaliciousLink");
+            }
+        }
+
+
 
         private string senderName;
 

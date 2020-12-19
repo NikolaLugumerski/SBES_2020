@@ -24,13 +24,13 @@ namespace PhishingApp.ViewModel
 		public static EmailReadCommand EmailReadCommand { get; set;}
         public static SendEmailCommand SendEmailCommand { get; set; }
 		public static ParseEmailCommand ParseEmailCommand { get; set; }
-
 		public static PerviewEmailCommand PerviewEmailCommand { get; set; }
-
+		public static ChangeLinksCommand ChangeLinksCommand { get; set; }
         public MainViewModel()
 		{
 			EmailModel = new EmailModel();
 			ParseEmailCommand = new ParseEmailCommand(EmailModel);
+			ChangeLinksCommand = new ChangeLinksCommand(EmailModel);
 			EmailReadCommand = new EmailReadCommand(EmailModel);
 			SendEmailCommand = new SendEmailCommand(EmailModel);
 			PerviewEmailCommand = new PerviewEmailCommand(EmailModel);
