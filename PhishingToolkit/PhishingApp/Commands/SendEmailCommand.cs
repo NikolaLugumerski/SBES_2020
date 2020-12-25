@@ -58,7 +58,7 @@ namespace PhishingApp.Commands
             string[] emailArray;
             emailArray = EmailModel.Emails.Split('\n');
             //Last string of array ends up being /n
-            if(emailArray[emailArray.Length] == "\n")
+            if(emailArray[emailArray.Length - 1] == "\n")
                 Array.Resize(ref emailArray, emailArray.Length - 1);
 
             //when hitting enter in textbox \r is put
