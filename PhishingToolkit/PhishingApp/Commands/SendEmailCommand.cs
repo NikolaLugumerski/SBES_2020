@@ -57,7 +57,14 @@ namespace PhishingApp.Commands
         {
             string[] emailArray;
             emailArray = EmailModel.Emails.Split('\n');
+            //Last string of array ends up being /n
             Array.Resize(ref emailArray, emailArray.Length - 1);
+
+            //when hitting enter in textbox \r is put
+            for(int i=0; i<emailArray.Length; i++)
+            {
+                emailArray[i] = emailArray[i].Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+            }
 
             string smtpHost = ConfigurationManager.AppSettings.Get("smtpHost");
             int smtpPort = Int32.Parse(ConfigurationManager.AppSettings.Get("smtpPort"));
