@@ -1,4 +1,5 @@
-﻿using PhishingApp.Model;
+﻿using LiveCharts;
+using PhishingApp.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,11 +21,20 @@ namespace PhishingApp.Commands
 			set { statisticsModel = value; }
 		}
 
+		private PieChartModel pieChartModel;
+
+		public PieChartModel PieChartModel
+		{
+			get { return pieChartModel; }
+			set { pieChartModel = value; }
+		}
 
 
-		public StatisticCommand(StatisticsModel statisticsModel)
+
+		public StatisticCommand(StatisticsModel statisticsModel, PieChartModel pcm)
 		{
 			StatisticsModel = statisticsModel;
+			PieChartModel = pcm;
 		}
 
 
@@ -63,7 +73,7 @@ namespace PhishingApp.Commands
 			}
 
 			StatisticsModel.FormsFilled = counter;
-
+			PieChartModel.FormsFilledSeries = new ChartValues<int>() { counter };
 		}
 	}
 }

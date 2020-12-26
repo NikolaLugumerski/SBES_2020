@@ -1,4 +1,7 @@
 ﻿using Common;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 using PhishingApp.Commands;
 using PhishingApp.Model;
 using System;
@@ -10,13 +13,27 @@ using System.ServiceModel;
 using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace PhishingApp.ViewModel
 {
-	public class MainViewModel
+	public class MainViewModel : UserControl
 	{
+		public static readonly DependencyProperty PieChartModelProperty = DependencyProperty.Register(
+			"PieChartModel",
+			typeof(PieChartModel),
+			typeof(MainViewModel),
+			new PropertyMetadata(default(PieChartModel)));
+
+		public PieChartModel PieChartModel
+		{
+			get => (PieChartModel)GetValue(MainViewModel.PieChartModelProperty);
+			set => SetValue(MainViewModel.PieChartModelProperty, value);
+		}
+
 
 		private EmailModel emailModel;
 
@@ -27,14 +44,15 @@ namespace PhishingApp.ViewModel
 		}
 
 
-		private StatisticsModel statisticsModel;
+		private static StatisticsModel statisticsModel;
 
-		public StatisticsModel StatisticsModel
+		public static StatisticsModel StatisticsModel
 		{
 			get { return statisticsModel; }
 			set { statisticsModel = value; }
 		}
 
+		public Func<ChartPoint, string> PointLabel { get; set; }
 
 		public static EmailReadCommand EmailReadCommand { get; set;}
         public static SendEmailCommand SendEmailCommand { get; set; }
@@ -50,33 +68,40 @@ namespace PhishingApp.ViewModel
 		public MainViewModel()
 		{
 			StatisticsModel = new StatisticsModel();
+			PieChartModel = new PieChartModel(StatisticsModel);
+			PointLabel = chartPoint =>
+			   string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
 
-			EmailModel = new EmailModel();
+		    EmailModel = new EmailModel();
+
 			ParseEmailCommand = new ParseEmailCommand(EmailModel);
 			ChangeLinksCommand = new ChangeLinksCommand(EmailModel);
 			EmailReadCommand = new EmailReadCommand(EmailModel);
-			SendEmailCommand = new SendEmailCommand(EmailModel, StatisticsModel);
+			SendEmailCommand = new SendEmailCommand(EmailModel, StatisticsModel, PieChartModel);
 			PreviewEmailCommand = new PreviewEmailCommand(EmailModel);
 			AddImageCommand = new AddImageCommand(EmailModel);
-			StatisticCommand = new StatisticCommand(StatisticsModel);
+			StatisticCommand = new StatisticCommand(StatisticsModel, PieChartModel);
 
 			ServiceHost svc = new ServiceHost(typeof(StatisticsService));
 			svc.AddServiceEndpoint(typeof(IFlag), new NetTcpBinding(), new Uri("net.tcp://localhost:4000/IFlag"));
 			svc.Open();
 
 			dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-			dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+			dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
 			dispatcherTimer.Start();
+
 		}
 
 
 		private void dispatcherTimer_Tick(object sender, EventArgs e)
 		{
 			StatisticCommand.Execute("tick");
-			ChangeLinksCommand.CanExecute("tick"); // mozda resi onaj problem 
-			// Forcing the CommandManager to raise the RequerySuggested event
 			CommandManager.InvalidateRequerySuggested();
 		}
+
+		
+
+
 
 	}
 }

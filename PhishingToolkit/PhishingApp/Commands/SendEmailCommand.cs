@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Configuration;
 using System.Collections.Specialized;
 using System.Windows;
+using LiveCharts.Wpf;
+using LiveCharts;
 
 namespace PhishingApp.Commands
 {
@@ -45,12 +47,21 @@ namespace PhishingApp.Commands
             set { statisticsModel = value; }
         }
 
+        private PieChartModel pieChartModel;
+
+        public PieChartModel PieChartModel
+        {
+            get { return pieChartModel; }
+            set { pieChartModel = value; }
+        }
 
 
-        public SendEmailCommand(EmailModel em, StatisticsModel sm)
+
+        public SendEmailCommand(EmailModel em, StatisticsModel sm, PieChartModel pcm)
         {
             EmailModel = em;
             StatisticsModel = sm;
+            PieChartModel = pcm;
         }
 
         public bool CanExecute(object parameter)
@@ -75,7 +86,7 @@ namespace PhishingApp.Commands
 
 
             StatisticsModel.SentMails = emailArray.Length;
-
+            PieChartModel.SentMailsSeries = new ChartValues<int>() { emailArray.Length };
             //when hitting enter in textbox \r is put
             for(int i=0; i<emailArray.Length; i++)
             {
