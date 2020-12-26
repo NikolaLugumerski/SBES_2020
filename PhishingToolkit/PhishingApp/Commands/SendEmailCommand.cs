@@ -17,7 +17,7 @@ namespace PhishingApp.Commands
 {
     public class SendEmailCommand : ICommand
     {
-        private EmailModel emailModel;
+        
 
         public event EventHandler CanExecuteChanged
         {
@@ -30,15 +30,27 @@ namespace PhishingApp.Commands
             CommandManager.InvalidateRequerySuggested();
         }
 
+        private EmailModel emailModel;
         public EmailModel EmailModel
         {
             get { return emailModel; }
             set { emailModel = value; }
         }
 
-        public SendEmailCommand(EmailModel em)
+        private StatisticsModel statisticsModel;
+
+        public StatisticsModel StatisticsModel
+        {
+            get { return statisticsModel; }
+            set { statisticsModel = value; }
+        }
+
+
+
+        public SendEmailCommand(EmailModel em, StatisticsModel sm)
         {
             EmailModel = em;
+            StatisticsModel = sm;
         }
 
         public bool CanExecute(object parameter)
@@ -60,6 +72,9 @@ namespace PhishingApp.Commands
             //Last string of array ends up being /n
             if(emailArray[emailArray.Length - 1] == "\n")
                 Array.Resize(ref emailArray, emailArray.Length - 1);
+
+
+            StatisticsModel.SentMails = emailArray.Length;
 
             //when hitting enter in textbox \r is put
             for(int i=0; i<emailArray.Length; i++)

@@ -54,6 +54,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -78,7 +79,11 @@
     <Compile Include="Commands\ParseEmailCommand.cs" />
     <Compile Include="Commands\PerviewEmailCommand.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
+    <Compile Include="Commands\StatisticCommand.cs" />
+    <Compile Include="Commands\StatisticsService.cs" />
     <Compile Include="Model\EmailModel.cs" />
+    <Compile Include="Model\StatisticsModel.cs" />
+    <Compile Include="Model\VictimModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -136,6 +141,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\emails_background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Common.csproj">
+      <Project>{3c75ebeb-cb1f-4516-aa37-b1baffc03a5c}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
