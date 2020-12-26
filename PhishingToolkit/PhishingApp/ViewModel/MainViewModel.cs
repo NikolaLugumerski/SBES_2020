@@ -61,13 +61,19 @@ namespace PhishingApp.ViewModel
 		public static ChangeLinksCommand ChangeLinksCommand { get; set; }
 		public static AddImageCommand AddImageCommand { get; set; }
 		public static StatisticCommand StatisticCommand { get; set; }
+		public static InitializeCommand InitializeCommand { get; set; }
+		public static SaveValuesCommand SaveValuesCommand { get; set; }
 
-		
 		DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 		
 		public MainViewModel()
 		{
 			StatisticsModel = new StatisticsModel();
+
+			InitializeCommand = new InitializeCommand(StatisticsModel);
+			InitializeCommand.Execute(null);
+
+
 			PieChartModel = new PieChartModel(StatisticsModel);
 			PointLabel = chartPoint =>
 			   string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
@@ -81,6 +87,7 @@ namespace PhishingApp.ViewModel
 			PreviewEmailCommand = new PreviewEmailCommand(EmailModel);
 			AddImageCommand = new AddImageCommand(EmailModel);
 			StatisticCommand = new StatisticCommand(StatisticsModel, PieChartModel);
+			SaveValuesCommand = new SaveValuesCommand(StatisticsModel);
 
 			ServiceHost svc = new ServiceHost(typeof(StatisticsService));
 			svc.AddServiceEndpoint(typeof(IFlag), new NetTcpBinding(), new Uri("net.tcp://localhost:4000/IFlag"));

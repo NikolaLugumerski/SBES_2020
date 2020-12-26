@@ -5,8 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PhishingApp.Views"
 			 xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+			 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1400">
+	         <i:Interaction.Triggers>
+				<i:EventTrigger EventName="Closing">
+					<i:InvokeCommandAction Command="{Binding  Path=SaveValuesCommand}" />
+				</i:EventTrigger>
+			 </i:Interaction.Triggers>
+
+
+
 	<Grid>
 		<Grid.Background>
 			<ImageBrush Stretch="Fill" ImageSource="..\Images\emails_background.jpg" AlignmentY="Top" AlignmentX="Center"/>
