@@ -26,6 +26,7 @@ namespace PhishingApp.ViewModel
 		public static ParseEmailCommand ParseEmailCommand { get; set; }
 		public static PreviewEmailCommand PreviewEmailCommand { get; set; }
 		public static ChangeLinksCommand ChangeLinksCommand { get; set; }
+		public static AddImageCommand AddImageCommand { get; set; }
         public MainViewModel()
 		{
 			EmailModel = new EmailModel();
@@ -34,6 +35,7 @@ namespace PhishingApp.ViewModel
 			EmailReadCommand = new EmailReadCommand(EmailModel);
 			SendEmailCommand = new SendEmailCommand(EmailModel);
 			PreviewEmailCommand = new PreviewEmailCommand(EmailModel);
+			AddImageCommand = new AddImageCommand(EmailModel);
 		}
 
 

@@ -57,7 +57,15 @@ namespace PhishingApp.Commands
         {
             string[] emailArray;
             emailArray = EmailModel.Emails.Split('\n');
-            Array.Resize(ref emailArray, emailArray.Length - 1);
+            //Last string of array ends up being /n
+            if(emailArray[emailArray.Length - 1] == "\n")
+                Array.Resize(ref emailArray, emailArray.Length - 1);
+
+            //when hitting enter in textbox \r is put
+            for(int i=0; i<emailArray.Length; i++)
+            {
+                emailArray[i] = emailArray[i].Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+            }
 
             string smtpHost = ConfigurationManager.AppSettings.Get("smtpHost");
             int smtpPort = Int32.Parse(ConfigurationManager.AppSettings.Get("smtpPort"));
@@ -69,7 +77,7 @@ namespace PhishingApp.Commands
                 message.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));
                 message.To.Add(new MailboxAddress(EmailModel.RecipientName, email));
                 message.Subject = EmailModel.EmailSubject;
-
+                
                 message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                 {
                     Text = EmailModel.Body
