@@ -50,13 +50,18 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
-			using (StreamWriter sw = new StreamWriter("emailPreview.txt"))
+			
+			using (StreamWriter sw = new StreamWriter("emailPreview.html"))
 			{
 				sw.Write(EmailModel.Body);
 			}
 
+			System.Diagnostics.Process.Start("emailPreview.html");
+			/*
 			PreviewWindow previewWindow = new PreviewWindow();
 			previewWindow.Show();
+			*/
+
 		}
 	}
 }
