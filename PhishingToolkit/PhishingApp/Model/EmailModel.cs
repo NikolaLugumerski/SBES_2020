@@ -15,7 +15,11 @@ namespace PhishingApp.Model
         public string Validate
         {
             get { return validate; }
-            set { validate = value; }
+            set 
+            {
+                validate = value;
+                OnPropertyChanged("Validate");
+            }
         }
 
 

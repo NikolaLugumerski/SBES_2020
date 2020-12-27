@@ -15,6 +15,7 @@ using System.Windows;
 using LiveCharts.Wpf;
 using LiveCharts;
 using MailKit.Security;
+using System.IO;
 
 namespace PhishingApp.Commands
 {
@@ -85,9 +86,7 @@ namespace PhishingApp.Commands
             if(emailArray[emailArray.Length - 1] == "\n")
                 Array.Resize(ref emailArray, emailArray.Length - 1);
 
-
-            StatisticsModel.SentMails = emailArray.Length;
-            PieChartModel.SentMailsSeries = new ChartValues<int>() { emailArray.Length };
+           
             //when hitting enter in textbox \r is put
             for(int i=0; i<emailArray.Length; i++)
             {
@@ -120,6 +119,7 @@ namespace PhishingApp.Commands
                     try
                     {
                         client.Authenticate(EmailModel.SenderEmail, EmailModel.SenderPassword);
+                       
                     }
                     catch (AuthenticationException)
                     {
@@ -132,6 +132,15 @@ namespace PhishingApp.Commands
                 }
 
             }
+
+            StatisticsModel.SentMails = emailArray.Length;
+
+            using (StreamWriter sw = new StreamWriter("sentMails.txt"))
+            {
+                sw.WriteLine(StatisticsModel.SentMails.ToString());
+            }
+
+            PieChartModel.SentMailsSeries = new ChartValues<int>() { emailArray.Length };
 
             MessageBox.Show("Messages sent.");
         }
