@@ -14,6 +14,7 @@ using System.Collections.Specialized;
 using System.Windows;
 using LiveCharts.Wpf;
 using LiveCharts;
+using MailKit.Security;
 
 namespace PhishingApp.Commands
 {
@@ -116,7 +117,15 @@ namespace PhishingApp.Commands
 
                     client.Connect(smtpHost, smtpPort, smtpUseSSL); // mozda 465
                     // Note: only needed if the SMTP server requires authentication
-                    client.Authenticate(EmailModel.SenderEmail, EmailModel.SenderPassword);
+                    try
+                    {
+                        client.Authenticate(EmailModel.SenderEmail, EmailModel.SenderPassword);
+                    }
+                    catch (AuthenticationException)
+                    {
+                        EmailModel.Validate = "Invalid email or password, try again";
+                        return;
+                    }
 
                     client.Send(message);
                     client.Disconnect(true);

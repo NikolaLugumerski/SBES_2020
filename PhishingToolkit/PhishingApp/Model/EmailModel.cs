@@ -10,6 +10,15 @@ namespace PhishingApp.Model
 {
 	public class EmailModel : INotifyPropertyChanged
 	{
+        private string validate;
+
+        public string Validate
+        {
+            get { return validate; }
+            set { validate = value; }
+        }
+
+
         private string emails;
 
         public string Emails
