@@ -8,11 +8,16 @@
 			 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1400">
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Closed">
+			<i:InvokeCommandAction Command="{Binding  Path=SaveValuesCommand}" />
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 
-	<Grid>
-		<Grid.Background>
-			<ImageBrush Stretch="Fill" ImageSource="..\Images\emails_background.jpg" AlignmentY="Top" AlignmentX="Center"/>
-		</Grid.Background>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="..\Images\emails_background.jpg" AlignmentY="Top" AlignmentX="Center"/>
+        </Grid.Background>
 
 		<Label Background="SlateGray" Content="Import Emails from txt file:" FontSize="16" HorizontalAlignment="Left" Margin="1039,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065" Width="202"/>
 		<Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Browse" HorizontalAlignment="Left" Margin="1246,53,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path= EmailReadCommand}"/>
@@ -37,28 +42,28 @@
 		<Label Background="SlateGray" Content="Sender:" FontSize="16" HorizontalAlignment="Left" Margin="25,102,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.905,1.065" Width="80"/>
 		<Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Add Image" HorizontalAlignment="Left" Margin="444,758,0,0" VerticalAlignment="Top" Width="93" Height="31" Command="{Binding Path=AddImageCommand}"/>
 
-		<lvc:PieChart Name="Chart" 
-                      LegendLocation="Right" InnerRadius="40" Margin="571,146,515,551" >
-			<lvc:PieChart.ChartLegend>
-				<lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
-			</lvc:PieChart.ChartLegend>
-			<lvc:PieChart.DataTooltip>
-				<lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
-			</lvc:PieChart.DataTooltip>
-			<lvc:PieChart.Series>
-				<lvc:PieSeries
+        <lvc:PieChart Name="Chart" 
+                      LegendLocation="Right" InnerRadius="40" Margin="571,167,394,470" >
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+            </lvc:PieChart.ChartLegend>
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+            </lvc:PieChart.DataTooltip>
+            <lvc:PieChart.Series>
+                <lvc:PieSeries
 					Title="Mails sent"
 					DataLabels="True"
 					Values="{Binding PieChartModel.SentMailsSeries}"
 					LabelPoint ="{Binding PointLabel}"/>
-				<lvc:PieSeries
+                <lvc:PieSeries
 					Title="Forms filled"
 					DataLabels="True"
 					Values="{Binding PieChartModel.FormsFilledSeries}"
 					LabelPoint ="{Binding PointLabel}"/>
-			</lvc:PieChart.Series>
-		</lvc:PieChart>
-		<TextBlock HorizontalAlignment="Left" Margin="580,506,0,0" TextWrapping="Wrap" FontWeight="Bold"  Text="Enter email and password of an gmail account you wish to send emails from" VerticalAlignment="Top" Width="232" Height="52"/>
-		<Label Content="{Binding Path=EmailModel.Validate, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontWeight="Bold" HorizontalAlignment="Left" Margin="580,563,0,0" VerticalAlignment="Top" Width="210" Height="36"/>
-	</Grid>
+            </lvc:PieChart.Series>
+        </lvc:PieChart>
+        <TextBlock HorizontalAlignment="Left" Margin="682,483,0,0" TextWrapping="Wrap" FontWeight="Bold"  Text="Enter email and password of an gmail account you wish to send emails from" VerticalAlignment="Top" Width="232" Height="52"/>
+        <Label Content="{Binding Path=EmailModel.Validate, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontWeight="Bold" HorizontalAlignment="Left" Margin="682,520,0,0" VerticalAlignment="Top" Width="210" Height="36"/>
+    </Grid>
 </UserControl>
