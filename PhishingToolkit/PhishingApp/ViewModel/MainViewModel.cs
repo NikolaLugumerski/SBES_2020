@@ -62,7 +62,6 @@ namespace PhishingApp.ViewModel
 		public static AddImageCommand AddImageCommand { get; set; }
 		public static StatisticCommand StatisticCommand { get; set; }
 		public static InitializeCommand InitializeCommand { get; set; }
-		public static SaveValuesCommand SaveValuesCommand { get; set; }
 	
 		DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 		
@@ -87,7 +86,7 @@ namespace PhishingApp.ViewModel
 			PreviewEmailCommand = new PreviewEmailCommand(EmailModel);
 			AddImageCommand = new AddImageCommand(EmailModel);
 			StatisticCommand = new StatisticCommand(StatisticsModel, PieChartModel);
-			SaveValuesCommand = new SaveValuesCommand(StatisticsModel);
+		
 	
 			ServiceHost svc = new ServiceHost(typeof(StatisticsService));
 			svc.AddServiceEndpoint(typeof(IFlag), new NetTcpBinding(), new Uri("net.tcp://localhost:4000/IFlag"));

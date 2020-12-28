@@ -62,8 +62,10 @@
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -88,7 +90,6 @@
     <Compile Include="Commands\InitializeCommand.cs" />
     <Compile Include="Commands\ParseEmailCommand.cs" />
     <Compile Include="Commands\PerviewEmailCommand.cs" />
-    <Compile Include="Commands\SaveValuesCommand.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Commands\StatisticCommand.cs" />
     <Compile Include="Commands\StatisticsService.cs" />
@@ -99,9 +100,6 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PreviewWindow.xaml.cs">
-      <DependentUpon>PreviewWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -116,10 +114,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PreviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

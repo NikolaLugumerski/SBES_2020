@@ -43,7 +43,7 @@ namespace PhishingApp.Commands
 
 		public bool CanExecute(object parameter)
 		{
-			if (EmailModel.MaliciousLink == null || EmailModel.Body == null)
+			if (EmailModel.MaliciousLink == string.Empty || EmailModel.Body == null)
 				return false;
 
 			return true;

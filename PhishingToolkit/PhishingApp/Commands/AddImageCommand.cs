@@ -1,11 +1,17 @@
-﻿using PhishingApp.Model;
+﻿using MimeKit;
+using MimeKit.Utils;
+using PhishingApp.Model;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
 
 namespace PhishingApp.Commands
 {
@@ -65,18 +71,37 @@ namespace PhishingApp.Commands
 
         public void AddImageToBody(string path)
         {
-            string filename = Path.GetFileName(path);
-            string extension = Path.GetExtension(path);
-            string base64ImageRepresentation = Convert.ToBase64String(File.ReadAllBytes(path));
-            EmailModel.Body += ("<img src =\"cid:0123456789\">\n");
+            if (path == "error")
+                return;
 
-            EmailModel.Body += ("Content-Type: image/" + extension.TrimStart('.') + "; name=\"" + filename + "\"\n");
-            EmailModel.Body += ("Content-Disposition: inline; filename=\"" + filename + "\"\n");
-            EmailModel.Body += ("Content-Transfer-Encoding: base64\n");
-            EmailModel.Body += ("Content-ID: <0123456789>");
-            EmailModel.Body += ("Content-Location: " + filename + "\n\n");
-            EmailModel.Body += ("base64 data\n\n");
-            EmailModel.Body += base64ImageRepresentation;
+            string temp = "<html><body>" + EmailModel.Body + "\n<br/>\n" + GetEmbeddedImage(path) + "<html><body>";
+
+            EmailModel.Body = temp;
         }
+       
+        private string GetEmbeddedImage(String filePath)
+        {
+            string initialContent = "data:image/" + Path.GetExtension(filePath).TrimStart('.') + ";base64,";
+
+            initialContent += GetBase64(filePath);
+
+            initialContent = "<img src=" + initialContent + ">";
+            return initialContent;
+        }
+
+        private string GetBase64(string filePath)
+        {
+            using (Image img = Image.FromFile(filePath))
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    img.Save(ms, img.RawFormat);
+                    byte[] imgBytes = ms.ToArray();
+                    return Convert.ToBase64String(imgBytes);
+                }
+            }
+        }
+
+
     }
 }

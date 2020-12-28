@@ -16,6 +16,8 @@ using LiveCharts.Wpf;
 using LiveCharts;
 using MailKit.Security;
 using System.IO;
+using System.Globalization;
+using System.ServiceModel.Channels;
 
 namespace PhishingApp.Commands
 {
@@ -99,14 +101,21 @@ namespace PhishingApp.Commands
 
             foreach (string email in emailArray)
             {
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));
-                message.To.Add(new MailboxAddress(EmailModel.RecipientName, email));
-                message.Subject = EmailModel.EmailSubject;
-                
-                message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                if (!IsValidEmail(email))
                 {
-                    Text = EmailModel.Body
+                    MessageBox.Show("Not all mails in the list are in a valid email format!");
+                }
+            }
+
+            foreach (string email in emailArray)
+            {
+                EmailModel.MessageToSend.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));
+                EmailModel.MessageToSend.To.Add(new MailboxAddress(EmailModel.RecipientName, email));
+                EmailModel.MessageToSend.Subject = EmailModel.EmailSubject;
+
+                EmailModel.MessageToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                {
+                    Text =  EmailModel.Body
                 };
 
                 using (var client = new MailKit.Net.Smtp.SmtpClient())
@@ -124,10 +133,11 @@ namespace PhishingApp.Commands
                     catch (AuthenticationException)
                     {
                         EmailModel.Validate = "Invalid email or password, try again";
+                        MessageBox.Show("Invalid email or password, try again");
                         return;
                     }
 
-                    client.Send(message);
+                    client.Send(EmailModel.MessageToSend);
                     client.Disconnect(true);
                 }
 
@@ -135,14 +145,64 @@ namespace PhishingApp.Commands
 
             StatisticsModel.SentMails = emailArray.Length;
 
-            using (StreamWriter sw = new StreamWriter("sentMails.txt"))
+
+            FileStream fsOverwrite = new FileStream("sentMails.txt", FileMode.Create);
+            using (StreamWriter sw = new StreamWriter(fsOverwrite))
             {
                 sw.WriteLine(StatisticsModel.SentMails.ToString());
             }
+            fsOverwrite.Close();
 
             PieChartModel.SentMailsSeries = new ChartValues<int>() { emailArray.Length };
 
             MessageBox.Show("Messages sent.");
+        }
+
+
+        public static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            try
+            {
+                // Normalize the domain
+                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
+                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
+
+                // Examines the domain part of the email and normalizes it.
+                string DomainMapper(Match match)
+                {
+                    // Use IdnMapping class to convert Unicode domain names.
+                    var idn = new IdnMapping();
+
+                    // Pull out and process domain name (throws ArgumentException on invalid)
+                    string domainName = idn.GetAscii(match.Groups[2].Value);
+
+                    return match.Groups[1].Value + domainName;
+                }
+            }
+            catch (RegexMatchTimeoutException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+            try
+            {
+                return Regex.IsMatch(email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
         }
     }
 }

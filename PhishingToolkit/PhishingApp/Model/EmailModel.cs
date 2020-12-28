@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MimeKit;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,6 +22,15 @@ namespace PhishingApp.Model
                 OnPropertyChanged("Validate");
             }
         }
+
+        private MimeMessage messageToSend;
+
+        public MimeMessage MessageToSend
+        {
+            get { return messageToSend; }
+            set { messageToSend = value; }
+        }
+
 
 
         private string emails;
@@ -127,7 +137,7 @@ namespace PhishingApp.Model
      
         public EmailModel()
         {
-           
+            MessageToSend = new MimeMessage();
         }
     }
 

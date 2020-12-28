@@ -68,6 +68,9 @@ namespace PhishingApp.Commands
 
 		public void ParseEMLFile(string path)
 		{
+			if (path == "error")
+				return;
+
 			var message = MimeMessage.Load(path);
 
 			EmailModel.Body = message.HtmlBody;
