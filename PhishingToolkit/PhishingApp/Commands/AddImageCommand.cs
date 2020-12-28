@@ -73,25 +73,6 @@ namespace PhishingApp.Commands
             if (path == "error")
                 return;
 
-            //var attachment = new MimePart("image", "gif")
-            //{
-            //    Content = new MimeContent(File.OpenRead(path), ContentEncoding.Default),
-            //    ContentDisposition = new MimeKit.ContentDisposition(MimeKit.ContentDisposition.Attachment),
-            //    ContentTransferEncoding = ContentEncoding.Base64,
-            //    FileName = Path.GetFileName(path)
-            //};
-
-            //var body = new TextPart("plain") { Text = EmailModel.Body };
-
-
-            //// now create the multipart/mixed container to hold the message text and the
-            //// image attachment
-            //var multipart = new Multipart("mixed");
-            //multipart.Add(body);
-            //multipart.Add(attachment);
-
-            //EmailModel.MessageToSend.Body = multipart;
-
             var builder = new BodyBuilder();
 
             builder.TextBody = EmailModel.Body;
