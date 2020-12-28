@@ -71,7 +71,7 @@ namespace PhishingApp.Commands
 
 		public void LoadEmails(string path)
 		{
-			if (path == null)
+			if (path == "error")
 				return;
 
 

@@ -99,11 +99,14 @@ namespace PhishingApp.Commands
             int smtpPort = Int32.Parse(ConfigurationManager.AppSettings.Get("smtpPort"));
             bool smtpUseSSL = Boolean.Parse(ConfigurationManager.AppSettings.Get("smtpUseSSL"));
 
+          
+
             foreach (string email in emailArray)
             {
                 if (!IsValidEmail(email))
                 {
                     MessageBox.Show("Not all mails in the list are in a valid email format!");
+                    return;
                 }
             }
 

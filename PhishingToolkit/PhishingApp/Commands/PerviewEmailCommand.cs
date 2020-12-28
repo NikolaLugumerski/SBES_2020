@@ -6,10 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
-using System.Threading.Tasks;
 using System.Windows.Annotations;
-using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace PhishingApp.Commands
@@ -53,15 +50,15 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
-		
 
-			using (StreamWriter sw = new StreamWriter("emailPreview.html")) 
+
+			using (StreamWriter sw = new StreamWriter("emailPreview.html"))
 			{
 				sw.Write(EmailModel.Body);
 			}
 
+		
 			System.Diagnostics.Process.Start("emailPreview.html");
-
 		}
 
 	}
