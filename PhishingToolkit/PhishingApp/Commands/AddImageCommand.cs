@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-
 namespace PhishingApp.Commands
 {
     public class AddImageCommand : ICommand
@@ -74,33 +73,42 @@ namespace PhishingApp.Commands
             if (path == "error")
                 return;
 
-            string temp = "<html><body>" + EmailModel.Body + "\n<br/>\n" + GetEmbeddedImage(path) + "<html><body>";
+            //var attachment = new MimePart("image", "gif")
+            //{
+            //    Content = new MimeContent(File.OpenRead(path), ContentEncoding.Default),
+            //    ContentDisposition = new MimeKit.ContentDisposition(MimeKit.ContentDisposition.Attachment),
+            //    ContentTransferEncoding = ContentEncoding.Base64,
+            //    FileName = Path.GetFileName(path)
+            //};
 
-            EmailModel.Body = temp;
+            //var body = new TextPart("plain") { Text = EmailModel.Body };
+
+
+            //// now create the multipart/mixed container to hold the message text and the
+            //// image attachment
+            //var multipart = new Multipart("mixed");
+            //multipart.Add(body);
+            //multipart.Add(attachment);
+
+            //EmailModel.MessageToSend.Body = multipart;
+
+            var builder = new BodyBuilder();
+
+            builder.TextBody = EmailModel.Body;
+
+            var image = builder.LinkedResources.Add(path);
+            image.ContentId = MimeUtils.GenerateMessageId();
+
+            builder.HtmlBody = string.Format(@"<p>{0}</p> <center><img src=""cid:{1}""></center>", EmailModel.Body , image.ContentId);
+
+            builder.Attachments.Add(path);
+
+            EmailModel.Body = builder.HtmlBody;
+
+
+            EmailModel.MessageToSend.Body = builder.ToMessageBody();
         }
-       
-        private string GetEmbeddedImage(String filePath)
-        {
-            string initialContent = "data:image/" + Path.GetExtension(filePath).TrimStart('.') + ";base64,";
-
-            initialContent += GetBase64(filePath);
-
-            initialContent = "<img src=" + initialContent + ">";
-            return initialContent;
-        }
-
-        private string GetBase64(string filePath)
-        {
-            using (Image img = Image.FromFile(filePath))
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    img.Save(ms, img.RawFormat);
-                    byte[] imgBytes = ms.ToArray();
-                    return Convert.ToBase64String(imgBytes);
-                }
-            }
-        }
+      
 
 
     }

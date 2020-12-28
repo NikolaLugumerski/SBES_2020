@@ -18,6 +18,7 @@ using MailKit.Security;
 using System.IO;
 using System.Globalization;
 using System.ServiceModel.Channels;
+using MailKit.Net.Smtp;
 
 namespace PhishingApp.Commands
 {
@@ -103,10 +104,13 @@ namespace PhishingApp.Commands
 
             foreach (string email in emailArray)
             {
-                if (!IsValidEmail(email))
+                if (!email.Equals(""))
                 {
-                    MessageBox.Show("Not all mails in the list are in a valid email format!");
-                    return;
+                    if (!IsValidEmail(email))
+                    {
+                        MessageBox.Show("Not all mails in the list are in a valid email format!");
+                        return;
+                    }
                 }
             }
 
@@ -116,10 +120,6 @@ namespace PhishingApp.Commands
                 EmailModel.MessageToSend.To.Add(new MailboxAddress(EmailModel.RecipientName, email));
                 EmailModel.MessageToSend.Subject = EmailModel.EmailSubject;
 
-                EmailModel.MessageToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                {
-                    Text =  EmailModel.Body
-                };
 
                 using (var client = new MailKit.Net.Smtp.SmtpClient())
                 {
@@ -140,13 +140,20 @@ namespace PhishingApp.Commands
                         return;
                     }
 
-                    client.Send(EmailModel.MessageToSend);
+                    //javlja se ovaj exception i svakako posalje poruku nzm sta je problem bogo
+                    try
+                    {
+                        client.Send(EmailModel.MessageToSend);
+
+                    }
+                    catch (SmtpCommandException) { }
+
                     client.Disconnect(true);
                 }
 
             }
 
-            StatisticsModel.SentMails = emailArray.Length;
+            StatisticsModel.SentMails = emailArray.Length - 1;
 
 
             FileStream fsOverwrite = new FileStream("sentMails.txt", FileMode.Create);
