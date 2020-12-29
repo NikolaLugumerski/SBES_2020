@@ -89,13 +89,7 @@ namespace PhishingApp.Commands
             if(emailArray[emailArray.Length - 1] == "\n")
                 Array.Resize(ref emailArray, emailArray.Length - 1);
 
-            var builder = new BodyBuilder();
-
-            builder.HtmlBody = EmailModel.Body;
-
-            EmailModel.MessageToSend.Body = builder.ToMessageBody();
-
-
+          
             //when hitting enter in textbox \r is put
             for (int i=0; i<emailArray.Length; i++)
             {
@@ -159,6 +153,7 @@ namespace PhishingApp.Commands
 
             }
 
+            //mozda treba mozda ne
             StatisticsModel.SentMails = emailArray.Length - 1;
 
 

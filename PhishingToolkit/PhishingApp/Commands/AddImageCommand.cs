@@ -80,12 +80,11 @@ namespace PhishingApp.Commands
             var image = builder.LinkedResources.Add(path);
             image.ContentId = MimeUtils.GenerateMessageId();
 
-            builder.HtmlBody = string.Format(@"<p>{0}</p> <center><img src=""cid:{1}""></center>", EmailModel.Body , image.ContentId);
+            builder.HtmlBody = string.Format(@"<p>{0}<p> {2} <center><img src=""cid:{1}""></center> {2}", EmailModel.Body , image.ContentId, Environment.NewLine);
 
             builder.Attachments.Add(path);
 
-            EmailModel.Body = builder.HtmlBody;
-
+            EmailModel.Body = builder.TextBody;
 
             EmailModel.MessageToSend.Body = builder.ToMessageBody();
         }

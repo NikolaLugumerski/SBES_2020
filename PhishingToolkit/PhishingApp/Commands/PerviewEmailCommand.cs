@@ -1,4 +1,5 @@
-﻿using MimeKit;
+﻿using MailKit;
+using MimeKit;
 using PhishingApp.Model;
 using PhishingApp.Views;
 using System;
@@ -42,7 +43,7 @@ namespace PhishingApp.Commands
 
 		public bool CanExecute(object parameter)
 		{
-			if (EmailModel.Body == null || EmailModel.SenderEmail.Equals("") || EmailModel.SenderName.Equals("") || EmailModel.RecipientName.Equals("") || EmailModel.EmailSubject.Equals("")) 
+			if (EmailModel.Body == null || EmailModel.SenderName.Equals("") || EmailModel.RecipientName.Equals("") || EmailModel.EmailSubject.Equals("")) 
 				return false;
 
 			return true;
@@ -58,7 +59,7 @@ namespace PhishingApp.Commands
 
 			EmailModel.MessageToSend.WriteTo("Preview.eml");
 
-		
+
 			System.Diagnostics.Process.Start("Preview.eml");
 		}
 

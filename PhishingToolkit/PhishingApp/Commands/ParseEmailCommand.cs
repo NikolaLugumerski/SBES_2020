@@ -74,7 +74,14 @@ namespace PhishingApp.Commands
 			var message = MimeMessage.Load(path);
 
 			EmailModel.Body = message.HtmlBody;
-			EmailModel.MessageToSend.Body = new TextPart { Text = message.HtmlBody };
+
+			var builder = new BodyBuilder();
+
+			builder.HtmlBody = EmailModel.Body;
+
+			EmailModel.MessageToSend.Body = builder.ToMessageBody();
+
+
 		}
 
 	}

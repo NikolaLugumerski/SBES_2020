@@ -11,6 +11,19 @@ namespace PhishingApp.Model
 {
 	public class EmailModel : INotifyPropertyChanged
 	{
+        private bool htmlImported;
+
+        public bool HtmlImported
+        {
+            get { return htmlImported; }
+            set
+            { 
+                htmlImported = value;
+                OnPropertyChanged("HtmlImported");
+            }
+        }
+
+
         private string validate;
 
         public string Validate
