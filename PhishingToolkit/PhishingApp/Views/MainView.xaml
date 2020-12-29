@@ -59,5 +59,6 @@
         </lvc:PieChart>
         <TextBlock HorizontalAlignment="Left" Margin="682,483,0,0" TextWrapping="Wrap" FontWeight="Bold"  Text="Enter email and password of an gmail account you wish to send emails from" VerticalAlignment="Top" Width="232" Height="52"/>
         <Label Content="{Binding Path=EmailModel.Validate, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontWeight="Bold" HorizontalAlignment="Left" Margin="682,520,0,0" VerticalAlignment="Top" Width="210" Height="36"/>
-    </Grid>
+		<Button Content="Show data of exploited victims" HorizontalAlignment="Left" Height="45" Margin="628,102,0,0" VerticalAlignment="Top" Width="226" Command="{Binding Path=ShowExploitedVictimsCommand}"/>
+	</Grid>
 </UserControl>

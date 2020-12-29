@@ -91,6 +91,7 @@
     <Compile Include="Commands\ParseEmailCommand.cs" />
     <Compile Include="Commands\PerviewEmailCommand.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
+    <Compile Include="Commands\ShowExploitedVictimsCommand.cs" />
     <Compile Include="Commands\StatisticCommand.cs" />
     <Compile Include="Commands\StatisticsService.cs" />
     <Compile Include="Model\EmailModel.cs" />
@@ -98,6 +99,9 @@
     <Compile Include="Model\StatisticsModel.cs" />
     <Compile Include="Model\VictimModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="Views\ExploitedVictimsWindow.xaml.cs">
+      <DependentUpon>ExploitedVictimsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -113,6 +117,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ExploitedVictimsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

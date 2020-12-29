@@ -71,9 +71,9 @@ namespace PhishingApp.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (EmailModel.Emails == null || EmailModel.SenderEmail == null || EmailModel.SenderName == null || 
-                EmailModel.SenderPassword == null || EmailModel.RecipientName == null || EmailModel.Body == null || 
-                EmailModel.EmailSubject == null)
+            if (EmailModel.Emails == null || EmailModel.SenderEmail.Equals("") || EmailModel.SenderName.Equals("") || 
+                EmailModel.SenderPassword.Equals("") || EmailModel.RecipientName.Equals("") || EmailModel.Body == null || 
+                EmailModel.EmailSubject.Equals(""))
             {
                 return false;
             }
@@ -89,9 +89,15 @@ namespace PhishingApp.Commands
             if(emailArray[emailArray.Length - 1] == "\n")
                 Array.Resize(ref emailArray, emailArray.Length - 1);
 
-           
+            var builder = new BodyBuilder();
+
+            builder.HtmlBody = EmailModel.Body;
+
+            EmailModel.MessageToSend.Body = builder.ToMessageBody();
+
+
             //when hitting enter in textbox \r is put
-            for(int i=0; i<emailArray.Length; i++)
+            for (int i=0; i<emailArray.Length; i++)
             {
                 emailArray[i] = emailArray[i].Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
             }

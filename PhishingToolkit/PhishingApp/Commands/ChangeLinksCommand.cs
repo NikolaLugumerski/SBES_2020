@@ -51,10 +51,10 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
-			if(!EmailModel.MaliciousLink.Contains("http://") && !EmailModel.MaliciousLink.Contains("https://"))
-            {
+			if (!EmailModel.MaliciousLink.Contains("http://") && !EmailModel.MaliciousLink.Contains("https://"))
+			{
 				EmailModel.MaliciousLink = "http://" + EmailModel.MaliciousLink;
-            }
+			}
 
 			HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
 			htmlDoc.LoadHtml(EmailModel.Body);

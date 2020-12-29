@@ -42,7 +42,7 @@ namespace PhishingApp.Commands
 
 		public bool CanExecute(object parameter)
 		{
-			if (EmailModel.Body == null || EmailModel.SenderEmail == null || EmailModel.SenderName == null || EmailModel.RecipientName == null || EmailModel.EmailSubject == null) 
+			if (EmailModel.Body == null || EmailModel.SenderEmail.Equals("") || EmailModel.SenderName.Equals("") || EmailModel.RecipientName.Equals("") || EmailModel.EmailSubject.Equals("")) 
 				return false;
 
 			return true;
@@ -52,14 +52,10 @@ namespace PhishingApp.Commands
 		{
 
 
-			//using (StreamWriter sw = new StreamWriter("emailPreview.html"))
-			//{
-			//	sw.Write(EmailModel.Body);
-			//}
-
 			EmailModel.MessageToSend.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));
 			EmailModel.MessageToSend.To.Add(new MailboxAddress(EmailModel.RecipientName, "previewmail@gmail.com"));
 			EmailModel.MessageToSend.Subject = EmailModel.EmailSubject;
+
 			EmailModel.MessageToSend.WriteTo("Preview.eml");
 
 		
