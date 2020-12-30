@@ -62,7 +62,8 @@ namespace PhishingApp.Model
         public string Body
         {
             get { return body; }
-            set { 
+            set {
+
                 body = value;
                 OnPropertyChanged("Body");
             }
@@ -76,6 +77,29 @@ namespace PhishingApp.Model
             set { 
                 maliciousLink = value;
                 OnPropertyChanged("MaliciousLink");
+            }
+        }
+
+        private string htmlBody;
+
+        public string HtmlBody
+        {
+            get { return htmlBody; }
+            set {
+                htmlBody = value;
+                OnPropertyChanged("HtmlBody");
+            }
+        }
+
+        private string htmlBodyHelper;
+
+        public string HtmlBodyHelper
+        {
+            get { return htmlBodyHelper; }
+            set 
+            { 
+                htmlBodyHelper = value;
+                OnPropertyChanged("HtmlBodyHelper");
             }
         }
 

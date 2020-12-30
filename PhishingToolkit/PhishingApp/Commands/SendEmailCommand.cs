@@ -114,6 +114,23 @@ namespace PhishingApp.Commands
                 }
             }
 
+            if (!EmailModel.HtmlImported)
+            {
+                EmailModel.MessageToSend.Body = new TextPart("plain") { Text = EmailModel.Body };
+            }
+            else
+            {
+
+                var builder = new BodyBuilder();
+
+                builder.HtmlBody = EmailModel.Body;
+
+                EmailModel.MessageToSend.Body = builder.ToMessageBody();
+
+            }
+
+
+
             foreach (string email in emailArray)
             {
                 EmailModel.MessageToSend.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));

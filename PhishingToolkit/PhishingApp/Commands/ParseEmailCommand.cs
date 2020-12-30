@@ -75,12 +75,7 @@ namespace PhishingApp.Commands
 
 			EmailModel.Body = message.HtmlBody;
 
-			var builder = new BodyBuilder();
-
-			builder.HtmlBody = EmailModel.Body;
-
-			EmailModel.MessageToSend.Body = builder.ToMessageBody();
-
+			EmailModel.HtmlImported = true;
 
 		}
 

@@ -52,15 +52,28 @@ namespace PhishingApp.Commands
 		public void Execute(object parameter)
 		{
 
+			if (EmailModel.HtmlImported)
+			{
+				using (StreamWriter sw = new StreamWriter("PreviewHtml.html")) 
+				{
+					sw.Write(EmailModel.Body);
+				}
 
-			EmailModel.MessageToSend.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));
-			EmailModel.MessageToSend.To.Add(new MailboxAddress(EmailModel.RecipientName, "previewmail@gmail.com"));
-			EmailModel.MessageToSend.Subject = EmailModel.EmailSubject;
 
-			EmailModel.MessageToSend.WriteTo("Preview.eml");
+				System.Diagnostics.Process.Start("PreviewHtml.html");
+			}
+			else
+			{
+				EmailModel.MessageToSend.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));
+				EmailModel.MessageToSend.To.Add(new MailboxAddress(EmailModel.RecipientName, "previewmail@gmail.com"));
+				EmailModel.MessageToSend.Subject = EmailModel.EmailSubject;
 
 
-			System.Diagnostics.Process.Start("Preview.eml");
+				EmailModel.MessageToSend.WriteTo("Preview.eml");
+
+				System.Diagnostics.Process.Start("Preview.eml");
+
+			}
 		}
 
 	}
