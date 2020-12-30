@@ -161,6 +161,18 @@ namespace PhishingApp.Model
             }
         }
 
+        private BodyBuilder bodyBuilder;
+
+        public BodyBuilder BodyBuilder
+        {
+            get { return bodyBuilder; }
+            set { 
+                bodyBuilder = value;
+                OnPropertyChanged("BodyBuilder");
+            }
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -175,6 +187,7 @@ namespace PhishingApp.Model
         public EmailModel()
         {
             MessageToSend = new MimeMessage();
+            BodyBuilder = new BodyBuilder();
         }
     }
 

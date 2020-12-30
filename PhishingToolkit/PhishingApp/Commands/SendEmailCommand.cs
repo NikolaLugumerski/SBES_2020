@@ -114,18 +114,46 @@ namespace PhishingApp.Commands
                 }
             }
 
-            if (!EmailModel.HtmlImported)
+
+            if (EmailModel.HtmlImported)
             {
                 EmailModel.MessageToSend.Body = new TextPart("plain") { Text = EmailModel.Body };
             }
             else
             {
+                EmailModel.BodyBuilder.TextBody = EmailModel.Body;
 
-                var builder = new BodyBuilder();
 
-                builder.HtmlBody = EmailModel.Body;
+                if (EmailModel.HtmlBody == null)
+                {
+                    EmailModel.HtmlBody = "\n" + "<p>" + EmailModel.Body + "</p>" + "\n";
+                    EmailModel.HtmlBodyHelper = EmailModel.Body;
+                }
+                else
+                {
+                    string temp = EmailModel.Body.Substring(EmailModel.HtmlBodyHelper.Length);
 
-                EmailModel.MessageToSend.Body = builder.ToMessageBody();
+                    if (temp == "")
+                    {
+
+                    }
+                    else
+                    {
+                        EmailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
+
+                        EmailModel.HtmlBodyHelper = EmailModel.Body;
+                    }
+                }
+
+                // zato sto prikazujes html u body mora ova linija koda
+                EmailModel.HtmlBodyHelper = EmailModel.HtmlBody;
+
+
+                EmailModel.BodyBuilder.HtmlBody = EmailModel.HtmlBody;
+                EmailModel.Body = EmailModel.BodyBuilder.HtmlBody;
+
+
+                EmailModel.MessageToSend.Body = EmailModel.BodyBuilder.ToMessageBody();
 
             }
 

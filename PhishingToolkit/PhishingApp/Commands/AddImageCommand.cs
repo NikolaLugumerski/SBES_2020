@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
-using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace PhishingApp.Commands
@@ -73,23 +74,46 @@ namespace PhishingApp.Commands
             if (path == "error")
                 return;
 
-            var builder = new BodyBuilder();
 
-            builder.TextBody = EmailModel.Body;
+            EmailModel.BodyBuilder.TextBody = EmailModel.Body;
 
-            var image = builder.LinkedResources.Add(path);
+
+            if (EmailModel.HtmlBody == null)
+            {
+                EmailModel.HtmlBody = "\n" + "<p>" + EmailModel.Body + "</p>" + "\n";
+                EmailModel.HtmlBodyHelper = EmailModel.Body;
+            }
+            else
+            {
+                string temp = EmailModel.Body.Substring(EmailModel.HtmlBodyHelper.Length);
+
+                if (temp == "")
+                {
+                  
+                }
+                else
+                {
+                    EmailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
+
+                    EmailModel.HtmlBodyHelper = EmailModel.Body;
+                }
+            }
+
+            var image = EmailModel.BodyBuilder.LinkedResources.Add(path);
             image.ContentId = MimeUtils.GenerateMessageId();
 
-            builder.HtmlBody = string.Format(@" <p> {0} </p> {2} <div> <center><img src=""cid:{1}""></center> </div>{2}", EmailModel.Body , image.ContentId, Environment.NewLine);
+            EmailModel.HtmlBody += string.Format(@"{2} <center><img src=""cid:{1}""></center> {2}", EmailModel.Body, image.ContentId, Environment.NewLine);
+            EmailModel.HtmlBodyHelper = EmailModel.HtmlBody;
 
-            builder.Attachments.Add(path);
 
-            EmailModel.Body = builder.TextBody;
+            EmailModel.BodyBuilder.HtmlBody = EmailModel.HtmlBody;
 
-            EmailModel.MessageToSend.Body = builder.ToMessageBody();
+            EmailModel.BodyBuilder.Attachments.Add(path);
+
+            EmailModel.Body = EmailModel.BodyBuilder.HtmlBody;
+
+       
         }
-      
-
 
     }
 }

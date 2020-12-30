@@ -68,6 +68,39 @@ namespace PhishingApp.Commands
 				EmailModel.MessageToSend.To.Add(new MailboxAddress(EmailModel.RecipientName, "previewmail@gmail.com"));
 				EmailModel.MessageToSend.Subject = EmailModel.EmailSubject;
 
+				EmailModel.BodyBuilder.TextBody = EmailModel.Body;
+
+
+				if (EmailModel.HtmlBody == null)
+				{
+					EmailModel.HtmlBody = "\n" + "<p>" + EmailModel.Body + "</p>" + "\n";
+					EmailModel.HtmlBodyHelper = EmailModel.Body;
+				}
+				else
+				{
+					string temp = EmailModel.Body.Substring(EmailModel.HtmlBodyHelper.Length);
+
+					if (temp == "")
+					{
+
+					}
+					else
+					{
+						EmailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
+
+						EmailModel.HtmlBodyHelper = EmailModel.Body;
+					}
+				}
+
+				// zato sto prikazujes html u body mora ova linija koda
+				EmailModel.HtmlBodyHelper = EmailModel.HtmlBody;
+
+
+				EmailModel.BodyBuilder.HtmlBody = EmailModel.HtmlBody;
+				EmailModel.Body = EmailModel.BodyBuilder.HtmlBody;
+
+
+				EmailModel.MessageToSend.Body = EmailModel.BodyBuilder.ToMessageBody();
 
 				EmailModel.MessageToSend.WriteTo("Preview.eml");
 
