@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -37,6 +38,9 @@ namespace PhishingApp.Commands
 
         public bool CanExecute(object parameter)
         {
+            if (EmailModel.LinkToAdd == "" || EmailModel.TextForLink == "")
+                return false;
+
             return true;
         }
 
