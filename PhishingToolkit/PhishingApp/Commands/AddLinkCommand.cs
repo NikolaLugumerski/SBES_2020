@@ -1,22 +1,15 @@
-﻿using MimeKit;
-using MimeKit.Utils;
-using PhishingApp.Model;
+﻿using PhishingApp.Model;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace PhishingApp.Commands
 {
-    public class AddImageCommand : ICommand
-    {
+	public class AddLinkCommand : ICommand
+	{
         private EmailModel emailModel;
 
         public EmailModel EmailModel
@@ -25,9 +18,9 @@ namespace PhishingApp.Commands
             set { emailModel = value; }
         }
 
-        public AddImageCommand(EmailModel em)
+        public AddLinkCommand(EmailModel emailModel)
         {
-            EmailModel = em;
+            EmailModel = emailModel;
         }
 
         public event EventHandler CanExecuteChanged
@@ -47,33 +40,13 @@ namespace PhishingApp.Commands
             return true;
         }
 
+
         public void Execute(object parameter)
         {
-            string image = BrowseImageFiles();
-            AddImageToBody(image);
-        }
-
-        public string BrowseImageFiles()
-        {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-            dlg.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
-
-            Nullable<bool> result = dlg.ShowDialog();
-
-            if (result == true)
+            if (!EmailModel.LinkToAdd.Contains("http://") && !EmailModel.LinkToAdd.Contains("https://"))
             {
-                return dlg.FileName;
+                EmailModel.LinkToAdd = "http://" + EmailModel.LinkToAdd;
             }
-
-            return "error";
-        }
-
-        public void AddImageToBody(string path)
-        {
-            if (path == "error")
-                return;
-
 
             EmailModel.BodyBuilder.TextBody = EmailModel.Body;
 
@@ -99,24 +72,18 @@ namespace PhishingApp.Commands
                         EmailModel.HtmlBodyHelper = EmailModel.Body;
                     }
                 }
-
             }
 
-            var image = EmailModel.BodyBuilder.LinkedResources.Add(path);
-            image.ContentId = MimeUtils.GenerateMessageId();
+            EmailModel.HtmlBody += string.Format(@"<a href={0}>{1}</a>",EmailModel.LinkToAdd, EmailModel.TextForLink);
 
-            EmailModel.HtmlBody += string.Format(@"{2} <center><img src=""cid:{1}""></center> {2}", EmailModel.Body, image.ContentId, Environment.NewLine);
+            // zato sto prikazujes html u body mora ova linija koda
             EmailModel.HtmlBodyHelper = EmailModel.HtmlBody;
 
 
             EmailModel.BodyBuilder.HtmlBody = EmailModel.HtmlBody;
-
-            EmailModel.BodyBuilder.Attachments.Add(path);
-
             EmailModel.Body = EmailModel.BodyBuilder.HtmlBody;
-
-       
+            
+            
         }
-
     }
 }

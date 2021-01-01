@@ -70,25 +70,27 @@ namespace PhishingApp.Commands
 
 				EmailModel.BodyBuilder.TextBody = EmailModel.Body;
 
-
-				if (EmailModel.HtmlBody == null)
+				if (EmailModel.Body != null)
 				{
-					EmailModel.HtmlBody = "\n" + "<p>" + EmailModel.Body + "</p>" + "\n";
-					EmailModel.HtmlBodyHelper = EmailModel.Body;
-				}
-				else
-				{
-					string temp = EmailModel.Body.Substring(EmailModel.HtmlBodyHelper.Length);
-
-					if (temp == "")
+					if (EmailModel.HtmlBody == null)
 					{
-
+						EmailModel.HtmlBody = "\n" + "<p>" + EmailModel.Body + "</p>" + "\n";
+						EmailModel.HtmlBodyHelper = EmailModel.Body;
 					}
 					else
 					{
-						EmailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
+						string temp = EmailModel.Body.Substring(EmailModel.HtmlBodyHelper.Length);
 
-						EmailModel.HtmlBodyHelper = EmailModel.Body;
+						if (temp == "")
+						{
+
+						}
+						else
+						{
+							EmailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
+
+							EmailModel.HtmlBodyHelper = EmailModel.Body;
+						}
 					}
 				}
 

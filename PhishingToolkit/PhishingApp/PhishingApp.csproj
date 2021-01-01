@@ -86,6 +86,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\AddDivCommand.cs" />
     <Compile Include="Commands\AddImageCommand.cs" />
+    <Compile Include="Commands\AddLinkCommand.cs" />
     <Compile Include="Commands\ChangeLinksCommand.cs" />
     <Compile Include="Commands\EmailReadCommand.cs" />
     <Compile Include="Commands\InitializeCommand.cs" />

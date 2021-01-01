@@ -64,6 +64,7 @@ namespace PhishingApp.ViewModel
 		public static InitializeCommand InitializeCommand { get; set; }
 		public static ShowExploitedVictimsCommand ShowExploitedVictimsCommand { get; set; }
 		public static AddDivCommand AddDivCommand { get; set; }
+		public static AddLinkCommand AddLinkCommand { get; set; }
 
 		DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 		
@@ -91,6 +92,7 @@ namespace PhishingApp.ViewModel
 			ShowExploitedVictimsCommand = new ShowExploitedVictimsCommand(StatisticsModel);
 			AddDivCommand = new AddDivCommand(EmailModel);
 
+			AddLinkCommand = new AddLinkCommand(EmailModel);
 
 			ServiceHost svc = new ServiceHost(typeof(StatisticsService));
 			svc.AddServiceEndpoint(typeof(IFlag), new NetTcpBinding(), new Uri("net.tcp://localhost:4000/IFlag"));

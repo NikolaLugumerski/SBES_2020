@@ -172,6 +172,29 @@ namespace PhishingApp.Model
             }
         }
 
+        private string linkToAdd;
+
+        public string LinkToAdd
+        {
+            get { return linkToAdd; }
+            set { 
+                linkToAdd = value;
+                OnPropertyChanged("LinkToAdd");
+            }
+        }
+
+        private string textForLink;
+
+        public string TextForLink
+        {
+            get { return textForLink; }
+            set 
+            { 
+                textForLink = value;
+                OnPropertyChanged("TextForLink");
+            }
+        }
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;
