@@ -84,7 +84,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\AddDivCommand.cs" />
     <Compile Include="Commands\AddImageCommand.cs" />
     <Compile Include="Commands\AddLinkCommand.cs" />
     <Compile Include="Commands\ChangeLinksCommand.cs" />

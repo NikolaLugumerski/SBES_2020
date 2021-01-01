@@ -74,8 +74,11 @@ namespace PhishingApp.Commands
 				{
 					if (EmailModel.HtmlBody == null)
 					{
-						EmailModel.HtmlBody = "\n" + "<p>" + EmailModel.Body + "</p>" + "\n";
+						EmailModel.HtmlBody = "\n" + "<p style=\"white-space: pre-line\">" + EmailModel.Body + "</p>" + "\n";
 						EmailModel.HtmlBodyHelper = EmailModel.Body;
+
+						// za preview
+						EmailModel.HtmlForPreview = "\n" + "<p style=\"white-space: pre-line\">" + EmailModel.Body + "</p>" + "\n";
 					}
 					else
 					{
@@ -87,9 +90,12 @@ namespace PhishingApp.Commands
 						}
 						else
 						{
-							EmailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
+							EmailModel.HtmlBody += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
 
 							EmailModel.HtmlBodyHelper = EmailModel.Body;
+
+							// za preview
+							EmailModel.HtmlForPreview += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
 						}
 					}
 				}
@@ -102,11 +108,23 @@ namespace PhishingApp.Commands
 				EmailModel.Body = EmailModel.BodyBuilder.HtmlBody;
 
 
-				EmailModel.MessageToSend.Body = EmailModel.BodyBuilder.ToMessageBody();
+				//za preview 
+				//EmailModel.HtmlForPreview = "<html><body>" + EmailModel.HtmlForPreview + "</body></html>";
 
-				EmailModel.MessageToSend.WriteTo("Preview.eml");
+				using (StreamWriter sw = new StreamWriter("Preview.html"))
+				{
+					sw.Write(EmailModel.HtmlForPreview);
+				}
 
-				System.Diagnostics.Process.Start("Preview.eml");
+				System.Diagnostics.Process.Start("Preview.html");
+
+
+
+				//EmailModel.MessageToSend.Body = EmailModel.BodyBuilder.ToMessageBody();
+
+				//EmailModel.MessageToSend.WriteTo("Preview.eml");
+
+				//System.Diagnostics.Process.Start("Preview.eml");
 
 			}
 		}

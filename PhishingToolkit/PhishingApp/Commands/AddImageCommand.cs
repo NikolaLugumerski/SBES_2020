@@ -81,8 +81,10 @@ namespace PhishingApp.Commands
             {
                 if (EmailModel.HtmlBody == null)
                 {
-                    EmailModel.HtmlBody = "\n" + "<p>" + EmailModel.Body + "</p>" + "\n";
+                    EmailModel.HtmlBody = "\n" + "<p  style=\"white-space: pre-line\">" + EmailModel.Body + "</p>" + "\n";
                     EmailModel.HtmlBodyHelper = EmailModel.Body;
+                    // za preview
+                    EmailModel.HtmlForPreview = "\n" + "<p  style=\"white-space: pre-line\">" + EmailModel.Body + "</p>" + "\n";
                 }
                 else
                 {
@@ -94,20 +96,25 @@ namespace PhishingApp.Commands
                     }
                     else
                     {
-                        EmailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
-
+                        EmailModel.HtmlBody += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
+                        // za preview
+                        EmailModel.HtmlForPreview += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
                         EmailModel.HtmlBodyHelper = EmailModel.Body;
                     }
                 }
 
             }
 
+
+
             var image = EmailModel.BodyBuilder.LinkedResources.Add(path);
             image.ContentId = MimeUtils.GenerateMessageId();
 
-            EmailModel.HtmlBody += string.Format(@"{2} <center><img src=""cid:{1}""></center> {2}", EmailModel.Body, image.ContentId, Environment.NewLine);
+            EmailModel.HtmlBody += string.Format(@"{2} <left><img src=""cid:{1}""></left> {2}", EmailModel.Body, image.ContentId, Environment.NewLine);
             EmailModel.HtmlBodyHelper = EmailModel.HtmlBody;
 
+            // za preview
+            EmailModel.HtmlForPreview += string.Format(@"{1} <left><img src=""{0}""></left> {1}", path, Environment.NewLine);
 
             EmailModel.BodyBuilder.HtmlBody = EmailModel.HtmlBody;
 

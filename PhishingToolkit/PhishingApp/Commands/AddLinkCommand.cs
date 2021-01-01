@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,8 +59,11 @@ namespace PhishingApp.Commands
             {
                 if (EmailModel.HtmlBody == null)
                 {
-                    EmailModel.HtmlBody = "\n" + "<p>" + EmailModel.Body + "</p>" + "\n";
+                    EmailModel.HtmlBody = "\n" + "<p  style=\"white-space: pre-line\">" + EmailModel.Body + "</p>" + "\n";
                     EmailModel.HtmlBodyHelper = EmailModel.Body;
+
+                    // za preview
+                    EmailModel.HtmlForPreview = "\n" + "<p  style=\"white-space: pre-line\">" + EmailModel.Body + "</p>" + "\n";
                 }
                 else
                 {
@@ -71,14 +75,18 @@ namespace PhishingApp.Commands
                     }
                     else
                     {
-                        EmailModel.HtmlBody += "\n" + "<p>" + temp + " </p>" + "\n";
-
+                        EmailModel.HtmlBody += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
+                        // za preview
+                        EmailModel.HtmlForPreview += "\n" + "<p  style=\"white-space: pre-line\">" + temp + " </p>" + "\n";
                         EmailModel.HtmlBodyHelper = EmailModel.Body;
                     }
                 }
             }
 
-            EmailModel.HtmlBody += string.Format(@"<a href={0}>{1}</a>",EmailModel.LinkToAdd, EmailModel.TextForLink);
+            EmailModel.HtmlBody += string.Format(@"<a href=""{0}""\>{1}</a>",EmailModel.LinkToAdd, EmailModel.TextForLink);
+
+            // za preview
+            EmailModel.HtmlForPreview += string.Format(@"<a href=""{0}"">{1}</a>", EmailModel.LinkToAdd, EmailModel.TextForLink);
 
             // zato sto prikazujes html u body mora ova linija koda
             EmailModel.HtmlBodyHelper = EmailModel.HtmlBody;

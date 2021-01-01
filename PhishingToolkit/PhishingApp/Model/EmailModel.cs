@@ -195,6 +195,18 @@ namespace PhishingApp.Model
             }
         }
 
+        private string htmlForPreview;
+
+        public string HtmlForPreview
+        {
+            get { return htmlForPreview; }
+            set 
+            {
+                htmlForPreview = value;
+                OnPropertyChanged("HtmlForPreview");
+            }
+        }
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

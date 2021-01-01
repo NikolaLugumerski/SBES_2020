@@ -63,7 +63,6 @@ namespace PhishingApp.ViewModel
 		public static StatisticCommand StatisticCommand { get; set; }
 		public static InitializeCommand InitializeCommand { get; set; }
 		public static ShowExploitedVictimsCommand ShowExploitedVictimsCommand { get; set; }
-		public static AddDivCommand AddDivCommand { get; set; }
 		public static AddLinkCommand AddLinkCommand { get; set; }
 
 		DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -90,8 +89,7 @@ namespace PhishingApp.ViewModel
 			AddImageCommand = new AddImageCommand(EmailModel);
 			StatisticCommand = new StatisticCommand(StatisticsModel, PieChartModel);
 			ShowExploitedVictimsCommand = new ShowExploitedVictimsCommand(StatisticsModel);
-			AddDivCommand = new AddDivCommand(EmailModel);
-
+		
 			AddLinkCommand = new AddLinkCommand(EmailModel);
 
 			ServiceHost svc = new ServiceHost(typeof(StatisticsService));
