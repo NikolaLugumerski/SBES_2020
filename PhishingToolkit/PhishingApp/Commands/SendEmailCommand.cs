@@ -19,6 +19,7 @@ using System.IO;
 using System.Globalization;
 using System.ServiceModel.Channels;
 using MailKit.Net.Smtp;
+using System.Windows.Controls;
 
 namespace PhishingApp.Commands
 {
@@ -60,17 +61,58 @@ namespace PhishingApp.Commands
             set { pieChartModel = value; }
         }
 
+        private ValidationModel validationModelSendEmail;
 
+        public ValidationModel ValidationModelSendEmail
+        {
+            get { return validationModelSendEmail; }
+            set { validationModelSendEmail = value; }
+        }
 
-        public SendEmailCommand(EmailModel em, StatisticsModel sm, PieChartModel pcm)
+        public SendEmailCommand(EmailModel em, StatisticsModel sm, PieChartModel pcm, ValidationModel vm)
         {
             EmailModel = em;
             StatisticsModel = sm;
             PieChartModel = pcm;
+            ValidationModelSendEmail = vm;
         }
 
         public bool CanExecute(object parameter)
         {
+            ValidationModelSendEmail.Text = string.Empty;
+            string temp = "";
+            if (EmailModel.Emails == null)
+            {
+                temp += "There are no emails to send message to" + "\n";
+            }
+            if (EmailModel.Body == null)
+            {
+                temp += "Email body is empty" + "\n";
+            }
+            if (EmailModel.SenderName == string.Empty) 
+            {
+                temp += "Name of sender is empty" + "\n";
+            }
+            if (EmailModel.SenderEmail == string.Empty)
+            {
+                temp += "Email of sender is empty" + "\n";
+            }
+            if (EmailModel.SenderPassword == string.Empty)
+            {
+                temp += "Password of sender is empty" + "\n";
+            }
+            if (EmailModel.RecipientName == string.Empty)
+            {
+                temp += "Recipient name is empty" + "\n";
+            }
+            if (EmailModel.EmailSubject == string.Empty)
+            {
+                temp += "Subject of email is empty";
+            }
+
+            ValidationModelSendEmail.Text = temp;
+
+
             if (EmailModel.Emails == null || EmailModel.SenderEmail.Equals("") || EmailModel.SenderName.Equals("") || 
                 EmailModel.SenderPassword.Equals("") || EmailModel.RecipientName.Equals("") || EmailModel.Body == null || 
                 EmailModel.EmailSubject.Equals(""))

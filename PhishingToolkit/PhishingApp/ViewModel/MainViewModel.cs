@@ -52,6 +52,38 @@ namespace PhishingApp.ViewModel
 			set { statisticsModel = value; }
 		}
 
+		private ValidationModel validationModelChangeLinks;
+
+		public ValidationModel ValidationModelChangeLinks
+		{
+			get { return validationModelChangeLinks; }
+			set { validationModelChangeLinks = value; }
+		}
+
+		private ValidationModel validationModelAddLink;
+
+		public ValidationModel ValidationModelAddLink
+		{
+			get { return validationModelAddLink; }
+			set { validationModelAddLink = value; }
+		}
+
+		private ValidationModel validationModelPreview;
+
+		public ValidationModel ValidationModelPreview
+		{
+			get { return validationModelPreview; }
+			set { validationModelPreview = value; }
+		}
+
+		private ValidationModel validationModelSendEmail;
+
+		public ValidationModel ValidationModelSendEmail
+		{
+			get { return validationModelSendEmail; }
+			set { validationModelSendEmail = value; }
+		}
+
 		public Func<ChartPoint, string> PointLabel { get; set; }
 
 		public static EmailReadCommand EmailReadCommand { get; set;}
@@ -69,6 +101,11 @@ namespace PhishingApp.ViewModel
 		
 		public MainViewModel()
 		{
+			ValidationModelChangeLinks = new ValidationModel();
+			ValidationModelAddLink = new ValidationModel();
+			ValidationModelPreview = new ValidationModel();
+			ValidationModelSendEmail = new ValidationModel();
+
 			StatisticsModel = new StatisticsModel();
 
 			InitializeCommand = new InitializeCommand(StatisticsModel);
@@ -82,14 +119,14 @@ namespace PhishingApp.ViewModel
 		    EmailModel = new EmailModel();
 
 			ParseEmailCommand = new ParseEmailCommand(EmailModel);
-			ChangeLinksCommand = new ChangeLinksCommand(EmailModel);
+			ChangeLinksCommand = new ChangeLinksCommand(EmailModel, ValidationModelChangeLinks);
 			EmailReadCommand = new EmailReadCommand(EmailModel);
-			SendEmailCommand = new SendEmailCommand(EmailModel, StatisticsModel, PieChartModel);
-			PreviewEmailCommand = new PreviewEmailCommand(EmailModel);
+			SendEmailCommand = new SendEmailCommand(EmailModel, StatisticsModel, PieChartModel, ValidationModelSendEmail);
+			PreviewEmailCommand = new PreviewEmailCommand(EmailModel, ValidationModelPreview);
 			AddImageCommand = new AddImageCommand(EmailModel);
 			StatisticCommand = new StatisticCommand(StatisticsModel, PieChartModel);
 			ShowExploitedVictimsCommand = new ShowExploitedVictimsCommand(StatisticsModel);
-			AddLinkCommand = new AddLinkCommand(EmailModel);
+			AddLinkCommand = new AddLinkCommand(EmailModel, ValidationModelAddLink);
 
 			ServiceHost svc = new ServiceHost(typeof(StatisticsService));
 			svc.AddServiceEndpoint(typeof(IFlag), new NetTcpBinding(), new Uri("net.tcp://localhost:4000/IFlag"));

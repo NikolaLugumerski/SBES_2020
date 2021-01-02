@@ -35,14 +35,38 @@ namespace PhishingApp.Commands
 			set { emailModel = value; }
 		}
 
-		public ChangeLinksCommand(EmailModel em)
+		private ValidationModel validationModelChangeLinks;
+
+		public ValidationModel ValidationModelChangeLinks
+		{
+			get { return validationModelChangeLinks; }
+			set { validationModelChangeLinks = value; }
+		}
+
+
+
+		public ChangeLinksCommand(EmailModel em, ValidationModel vm)
 		{
 			EmailModel = em;
+			ValidationModelChangeLinks = vm;
 		}
 
 
 		public bool CanExecute(object parameter)
 		{
+			ValidationModelChangeLinks.Text = string.Empty;
+			string temp = "";
+			if (EmailModel.MaliciousLink == string.Empty)
+			{
+				temp += "Malicious link is empty" + "\n";
+			}
+			if (EmailModel.Body == null)
+			{
+				temp += "Email body is empty";
+			}
+
+			ValidationModelChangeLinks.Text = temp;
+
 			if (EmailModel.MaliciousLink == string.Empty || EmailModel.Body == null)
 				return false;
 

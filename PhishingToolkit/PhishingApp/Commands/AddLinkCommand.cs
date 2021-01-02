@@ -20,9 +20,19 @@ namespace PhishingApp.Commands
             set { emailModel = value; }
         }
 
-        public AddLinkCommand(EmailModel emailModel)
+        private ValidationModel validationModelAddLink;
+
+        public ValidationModel ValidationModelAddLink
+        {
+            get { return validationModelAddLink; }
+            set { validationModelAddLink = value; }
+        }
+
+
+        public AddLinkCommand(EmailModel emailModel, ValidationModel vm)
         {
             EmailModel = emailModel;
+            ValidationModelAddLink = vm;
         }
 
         public event EventHandler CanExecuteChanged
@@ -37,8 +47,24 @@ namespace PhishingApp.Commands
         }
 
 
+
         public bool CanExecute(object parameter)
         {
+            ValidationModelAddLink.Text = string.Empty;
+            string temp = "";
+            if (EmailModel.LinkToAdd == string.Empty)
+            {
+                temp += "Link is empty" + "\n";
+            }
+            if (EmailModel.TextForLink == string.Empty)
+            {
+                temp += "Text for link is empty";
+            }
+
+            ValidationModelAddLink.Text = temp;
+
+
+
             if (EmailModel.LinkToAdd == "" || EmailModel.TextForLink == "")
                 return false;
 

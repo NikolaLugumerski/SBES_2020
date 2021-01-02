@@ -35,15 +35,36 @@ namespace PhishingApp.Commands
 			set { emailModel = value; }
 		}
 
-		public PreviewEmailCommand(EmailModel emailModel)
+
+		private ValidationModel validationModelPreview;
+
+		public ValidationModel ValidationModelPreview
+		{
+			get { return validationModelPreview; }
+			set { validationModelPreview = value; }
+		}
+
+		public PreviewEmailCommand(EmailModel emailModel, ValidationModel vm)
 		{
 			EmailModel = emailModel;
+			ValidationModelPreview = vm;
 		}
+
 
 
 		public bool CanExecute(object parameter)
 		{
-			if (EmailModel.Body == null || EmailModel.SenderName.Equals("") || EmailModel.RecipientName.Equals("") || EmailModel.EmailSubject.Equals("")) 
+			ValidationModelPreview.Text = string.Empty;
+			string temp = "";
+			if (EmailModel.Body == null)
+			{
+				temp += "Email body is empty";
+			}
+
+			ValidationModelPreview.Text = temp;
+
+
+			if (EmailModel.Body == null) 
 				return false;
 
 			return true;
@@ -64,9 +85,6 @@ namespace PhishingApp.Commands
 			}
 			else
 			{
-				EmailModel.MessageToSend.From.Add(new MailboxAddress(EmailModel.SenderName, EmailModel.SenderEmail));
-				EmailModel.MessageToSend.To.Add(new MailboxAddress(EmailModel.RecipientName, "previewmail@gmail.com"));
-				EmailModel.MessageToSend.Subject = EmailModel.EmailSubject;
 
 				EmailModel.BodyBuilder.TextBody = EmailModel.Body;
 

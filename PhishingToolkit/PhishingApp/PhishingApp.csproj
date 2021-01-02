@@ -98,6 +98,7 @@
     <Compile Include="Model\EmailModel.cs" />
     <Compile Include="Model\PieChartModel.cs" />
     <Compile Include="Model\StatisticsModel.cs" />
+    <Compile Include="Model\ValidationModel.cs" />
     <Compile Include="Model\VictimModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Views\ExploitedVictimsWindow.xaml.cs">
