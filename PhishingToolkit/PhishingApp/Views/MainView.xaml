@@ -7,7 +7,7 @@
 			 xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
 			 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1400">
+             d:DesignHeight="900" d:DesignWidth="1400">
     <Grid>
         <Grid.Background>
             <ImageBrush Stretch="Fill" ImageSource="..\Images\emails_background.jpg" AlignmentY="Top" AlignmentX="Center"/>
@@ -37,7 +37,7 @@
         <Button Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Content="Add Image" HorizontalAlignment="Left" Margin="432,640,0,0" VerticalAlignment="Top" Width="105" Height="31" Command="{Binding Path=AddImageCommand}" FontSize="14"/>
         <Label Background="LightSlateGray" BorderBrush="Black" BorderThickness="1" FontSize="14" Content="" HorizontalAlignment="Left" Margin="571,152,0,0" VerticalAlignment="Top" Width="428" Height="276"/>
         <lvc:PieChart Name="Chart" 
-                      LegendLocation="Right" InnerRadius="40" Margin="571,152,401,494" >
+                      LegendLocation="Right" InnerRadius="40" Margin="571,152,401,472" >
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
             </lvc:PieChart.ChartLegend>
