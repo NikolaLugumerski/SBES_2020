@@ -108,8 +108,7 @@ namespace PhishingApp.Commands
 				EmailModel.Body = EmailModel.BodyBuilder.HtmlBody;
 
 
-				//za preview 
-				//EmailModel.HtmlForPreview = "<html><body>" + EmailModel.HtmlForPreview + "</body></html>";
+			
 
 				using (StreamWriter sw = new StreamWriter("Preview.html"))
 				{
@@ -117,14 +116,6 @@ namespace PhishingApp.Commands
 				}
 
 				System.Diagnostics.Process.Start("Preview.html");
-
-
-
-				//EmailModel.MessageToSend.Body = EmailModel.BodyBuilder.ToMessageBody();
-
-				//EmailModel.MessageToSend.WriteTo("Preview.eml");
-
-				//System.Diagnostics.Process.Start("Preview.eml");
 
 			}
 		}
