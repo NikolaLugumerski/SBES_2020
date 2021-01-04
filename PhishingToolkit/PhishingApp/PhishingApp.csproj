@@ -90,7 +90,7 @@
     <Compile Include="Commands\EmailReadCommand.cs" />
     <Compile Include="Commands\InitializeCommand.cs" />
     <Compile Include="Commands\ParseEmailCommand.cs" />
-    <Compile Include="Commands\PerviewEmailCommand.cs" />
+    <Compile Include="Commands\PreviewEmailCommand.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Commands\ShowExploitedVictimsCommand.cs" />
     <Compile Include="Commands\StatisticCommand.cs" />
