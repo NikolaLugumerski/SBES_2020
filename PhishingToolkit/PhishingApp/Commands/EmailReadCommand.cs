@@ -97,6 +97,7 @@ namespace PhishingApp.Commands
 						else
 						{
 							MessageBox.Show("Mails in .txt file are not in a valid format!");
+							return;
 						}
 					}
 				}
@@ -107,7 +108,6 @@ namespace PhishingApp.Commands
 				Console.WriteLine(e.Message);
 			}
 
-			//mozda bude morala provera da li su email-ovi svi unikatni HashSet lagano
 
 			EmailModel.Emails = emails;
 		}

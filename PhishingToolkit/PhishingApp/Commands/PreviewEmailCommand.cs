@@ -72,7 +72,6 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
-
 			if (EmailModel.HtmlImported)
 			{
 				using (StreamWriter sw = new StreamWriter("PreviewHtml.html")) 
@@ -80,12 +79,10 @@ namespace PhishingApp.Commands
 					sw.Write(EmailModel.Body);
 				}
 
-
 				System.Diagnostics.Process.Start("PreviewHtml.html");
 			}
 			else
 			{
-
 				EmailModel.BodyBuilder.TextBody = EmailModel.Body;
 
 				if (EmailModel.Body != null)
@@ -124,9 +121,6 @@ namespace PhishingApp.Commands
 
 				EmailModel.BodyBuilder.HtmlBody = EmailModel.HtmlBody;
 				EmailModel.Body = EmailModel.BodyBuilder.HtmlBody;
-
-
-			
 
 				using (StreamWriter sw = new StreamWriter("Preview.html"))
 				{
