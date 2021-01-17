@@ -159,7 +159,8 @@ namespace PhishingApp.Commands
 
             if (EmailModel.HtmlImported)
             {
-                EmailModel.MessageToSend.Body = new TextPart("plain") { Text = EmailModel.Body };
+                EmailModel.MessageToSend.Body = new TextPart("html") { Text = EmailModel.Body };
+
             }
             else
             {
@@ -227,7 +228,6 @@ namespace PhishingApp.Commands
                         return;
                     }
 
-                    //javlja se ovaj exception i svakako posalje poruku nzm sta je problem bogo
                     try
                     {
                         client.Send(EmailModel.MessageToSend);
@@ -240,7 +240,7 @@ namespace PhishingApp.Commands
 
             }
 
-            //mozda treba mozda ne
+           
             StatisticsModel.SentMails = emailArray.Length - 1;
 
 
