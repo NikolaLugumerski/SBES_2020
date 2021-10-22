@@ -1,4 +1,6 @@
-﻿using LiveCharts;
+﻿using Contracts.DatabaseModel;
+using DatabaseRepository;
+using LiveCharts;
 using PhishingApp.Model;
 using System;
 using System.Collections.Generic;
@@ -57,23 +59,31 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
+			DataRepository dr = new DataRepository();
 
-			int counter = 0;
-			string line = string.Empty;
-			using (StreamReader sr = new StreamReader("database.txt"))
+			try
 			{
-				while ((line = sr.ReadLine()) != null)
-				{
-					string[] tokens = line.Split(';');
 
-					StatisticsModel.ExploitedVictims[tokens[0]] = new VictimModel(tokens[0], tokens[1], DateTime.Parse(tokens[2]));
-
-					counter++;
-				}
+				StatisticsModel.ExploitedVictims = dr.GetVictims().ToDictionary(v => v.Id.ToString());
+				StatisticsModel.FormsFilled = StatisticsModel.ExploitedVictims.Count();
+			}
+			catch (InvalidOperationException)
+			{
+				StatisticsModel.FormsFilled = 0;
 			}
 
-			StatisticsModel.FormsFilled = counter;
-			PieChartModel.FormsFilledSeries = new ChartValues<int>() { counter };
+			PieChartModel.FormsFilledSeries = new ChartValues<int>() { StatisticsModel.FormsFilled };
+
+			try
+			{
+				StatisticsModel.SentMails = dr.GetAppConfigs().Last().SentMails;
+			}
+			catch (InvalidOperationException)
+			{
+				StatisticsModel.SentMails = 0;
+			}
+
+			PieChartModel.SentMailsSeries = new ChartValues<int>() { StatisticsModel.SentMails };
 		}
 	}
 }

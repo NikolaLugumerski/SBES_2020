@@ -7,7 +7,7 @@
 		xmlns:views ="clr-namespace:PhishingApp.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1400">
-    <Grid>
-		<views:MainView/>
-	</Grid>
+	<Window.Content>
+		<views:LoginView/>
+	</Window.Content>
 </Window>

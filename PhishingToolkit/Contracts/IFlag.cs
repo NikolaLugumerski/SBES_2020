@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Contracts.DatabaseModel;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Text;
@@ -9,6 +11,6 @@ namespace Common
 	public interface IFlag
 	{
 		[OperationContract]
-		void SendData(string data);
+		void SendData(VictimModel data);
 	}
 }

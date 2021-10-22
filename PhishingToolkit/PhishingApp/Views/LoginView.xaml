@@ -1,0 +1,24 @@
+﻿<Page x:Class="PhishingApp.Views.LoginView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PhishingApp.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="900" d:DesignWidth="1400"
+      Title="Login">
+
+	<Grid>
+		<Grid.Background>
+			<ImageBrush Stretch="Fill" ImageSource="..\Images\emails_background.jpg" AlignmentY="Top" AlignmentX="Center"/>
+		</Grid.Background>
+		<Label FontSize="16" FontWeight="Bold" Content="Username" HorizontalAlignment="Left" Margin="577,396,0,0" VerticalAlignment="Top"/>
+		<Label FontSize="16" FontWeight="Bold" Content="Password" HorizontalAlignment="Left" Margin="581,479,0,0" VerticalAlignment="Top"/>
+		<TextBox x:Name="usernameTxtBox" FontSize="16" HorizontalAlignment="Left" Height="31" Margin="581,432,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186"/>
+		<TextBox x:Name="passwordTxtBox" FontSize="16" HorizontalAlignment="Left" Height="31" Margin="581,515,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186"/>
+		<Label Content="PHISHING TOOLKIT" FontSize="36" FontWeight="Bold" HorizontalAlignment="Left" Margin="463,48,0,0" VerticalAlignment="Top" Height="83" Width="353"/>
+		<Label x:Name="informationLbl" Content="Please login to enable application options" HorizontalAlignment="Left" FontSize="16" Margin="508,339,0,0" VerticalAlignment="Top" Width="430"/>
+		<Button x:Name="LoginBtn" FontSize="16" FontWeight="Bold" Content="Login" HorizontalAlignment="Left" Height="34" Margin="581,577,0,0" VerticalAlignment="Top" Width="96" Background="CadetBlue" BorderBrush="Black" BorderThickness="2" Click="LoginBtn_Click"/>
+
+	</Grid>
+</Page>

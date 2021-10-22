@@ -20,6 +20,8 @@ using System.Globalization;
 using System.ServiceModel.Channels;
 using MailKit.Net.Smtp;
 using System.Windows.Controls;
+using DatabaseRepository;
+using Contracts.DatabaseModel;
 
 namespace PhishingApp.Commands
 {
@@ -191,7 +193,6 @@ namespace PhishingApp.Commands
                 // zato sto prikazujes html u body mora ova linija koda
                 EmailModel.HtmlBodyHelper = EmailModel.HtmlBody;
 
-
                 EmailModel.BodyBuilder.HtmlBody = EmailModel.HtmlBody;
                 EmailModel.Body = EmailModel.BodyBuilder.HtmlBody;
 
@@ -240,18 +241,13 @@ namespace PhishingApp.Commands
 
             }
 
-           
-            StatisticsModel.SentMails = emailArray.Length - 1;
+            StatisticsModel.SentMails = emailArray.Length;
+            DataRepository dr = new DataRepository();
+            AppConfigModel acm = new AppConfigModel(StatisticsModel.SentMails);
 
-
-            FileStream fsOverwrite = new FileStream("sentMails.txt", FileMode.Create);
-            using (StreamWriter sw = new StreamWriter(fsOverwrite))
-            {
-                sw.WriteLine(StatisticsModel.SentMails.ToString());
-            }
-            fsOverwrite.Close();
-
-            PieChartModel.SentMailsSeries = new ChartValues<int>() { emailArray.Length };
+            dr.InsertAppConfig(acm);
+      
+            PieChartModel.SentMailsSeries = new ChartValues<int>() { StatisticsModel.SentMails };
 
             MessageBox.Show("Messages sent.");
         }

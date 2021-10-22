@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts.DatabaseModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -41,9 +42,9 @@ namespace PhishingApp.Model
             }
         }
 
-        private Dictionary<string,VictimModel> exploitedVictims;
+        private Dictionary<string, VictimModel> exploitedVictims;
 
-        public Dictionary<string,VictimModel> ExploitedVictims
+        public Dictionary<string, VictimModel> ExploitedVictims
         {
             get { return exploitedVictims; }
             set {

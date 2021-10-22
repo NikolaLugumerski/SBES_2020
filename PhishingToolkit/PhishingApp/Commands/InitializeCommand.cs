@@ -1,4 +1,5 @@
-﻿using PhishingApp.Model;
+﻿using DatabaseRepository;
+using PhishingApp.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,25 +45,30 @@ namespace PhishingApp.Commands
 
 		public void Execute(object parameter)
 		{
+			DataRepository dr = new DataRepository();
 			int numOfSentMail = 0;
-			using (StreamReader sr = new StreamReader("sentMails.txt"))
+
+
+
+			try
 			{
-				numOfSentMail = Int32.Parse(sr.ReadLine());
+				numOfSentMail = dr.GetAppConfigs().Last().SentMails;
 			}
+			catch (InvalidOperationException)
+			{
+				numOfSentMail = 0;
+			}
+
 
 			StatisticsModel.SentMails = numOfSentMail;
-
-			int counter = 0;
-			string line = string.Empty;
-			using (StreamReader sr = new StreamReader("database.txt"))
+			try
 			{
-				while ((line = sr.ReadLine()) != null)
-				{
-					counter++;
-				}
+				StatisticsModel.FormsFilled = dr.GetVictims().Count();
 			}
-
-			StatisticsModel.FormsFilled = counter;
+			catch (InvalidOperationException)
+			{
+				StatisticsModel.FormsFilled = 0;
+			}
 		}
 	}
 }

